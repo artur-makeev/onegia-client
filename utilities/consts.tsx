@@ -1,0 +1,9 @@
+export const SHOP_ROUTE = '/shop';
+export const BASKET_ROUTE = '/basket';
+export const PRODUCT_ROUTE = '/product';
+export const ORDER_ROUTE = '/order';
+export const HOME_ROUTE = '/';
+export const ABOUT_ROUTE = '/about';
+export const OFFER_ROUTE = '/offer';
+export const CONTACTS_ROUTE = '/contacts';
+export const VK_LINK = 'https://vk.com/onegia_store';

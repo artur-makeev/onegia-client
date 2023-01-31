@@ -1,0 +1,25 @@
+.container {
+	min-height: calc(100vh - 74px);
+	padding: 1px 50px 30px;
+	margin-top: 74px;
+	background-color: #F5F5F5;
+}
+
+@media screen and (max-width: 810px) {
+	.container {
+		padding: 1px 20px 30px;
+	}
+}
+
+@media screen and (max-width: 500px) {
+	.container {
+		min-height: calc(100vh - 74px - 56px);
+		margin-bottom: 56px;
+	}
+}
+
+@media screen and (max-width: 400px) {
+	.container {
+		padding: 1px 5px 15px;
+	}
+}

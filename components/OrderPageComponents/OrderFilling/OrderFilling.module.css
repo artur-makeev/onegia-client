@@ -1,0 +1,82 @@
+.container h1 {
+	width: 100%;
+	text-align: center;
+}
+
+.orderContainer {
+	display: flex;
+	justify-content: center;
+	gap: 15px;
+}
+
+.orderForm {
+	display: flex;
+	flex-direction: column;
+}
+
+.addressContainer {
+	position: sticky;
+	top: 90px;
+	height: 100%;
+}
+
+.summaryItem {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 15px;
+}
+
+.orderConfirm {
+	display: flex;
+	flex-direction: column;
+	margin: 8px;
+}
+
+.orderResume {
+	text-align: center;
+}
+
+.orderButton {
+	margin: 8px;
+}
+
+.offer {
+	margin: 8px;
+}
+
+.orderTotal {
+	padding: 10px 10px 20px;
+}
+
+.row {
+	display: flex;
+	width: 340px;
+	justify-content: space-between;
+	margin: auto;
+}
+
+@media screen and (max-width: 1105px) {
+	.container {
+		margin: auto;
+	}
+}
+
+@media screen and (max-width: 880px) {
+	.addressContainer {
+		position: static;
+		display: flex;
+		width: 100%;
+		flex-direction: column;
+	}
+
+	.orderContainer {
+		flex-direction: column;
+		align-items: center;
+	}
+}
+
+@media screen and (max-width: 400px) {
+	.row {
+		width: 300px;
+	}
+}

@@ -1,0 +1,27 @@
+.container {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 15px;
+}
+
+.paginationItem {
+	width: 30px;
+	height: 30px;
+	padding: 0;
+	margin-right: 5px;
+}
+
+.paginationItemContainer {
+	width: 35px;
+	height: 30px;
+}
+
+.selected {
+	border: none;
+	background-image: url("../../../public/images/bg-pagination.png");
+	color: white;
+}
+
+.arrowIcon {
+	cursor: pointer;
+}

@@ -1,0 +1,23 @@
+.vkLogoContainer {
+	width: 24px;
+	height: 24px;
+}
+
+.navLink {
+	color: white;
+}
+
+.bottomBar {
+	display: none;
+}
+
+.dropdown {
+	color: black;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+@media screen and (max-width: 500px) {
+	.bottomBar {
+		display: flex;
+	}
+}

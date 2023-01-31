@@ -1,0 +1,15 @@
+.button {
+	padding: 10px;
+	border: 1px solid black;
+	background-color: transparent;
+	cursor: pointer;
+	font-size: 20px;
+}
+
+.button:focus {
+	outline: none;
+}
+
+.small {
+	padding: 5px;
+}

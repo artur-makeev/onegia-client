@@ -161,7 +161,7 @@
 	}
 }
 
-@media screen and (max-height: 740px) {
+@media screen and (max-height: 740px) and (max-width: 500px) {
 	.container {
 		height: auto;
 	}

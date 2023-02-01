@@ -161,6 +161,21 @@
 	}
 }
 
+@media screen and (max-height: 740px) {
+	.container {
+		height: auto;
+	}
+
+	.imgContainer {
+		height: 200px;
+	}
+
+	.image {
+		height: 200px;
+		object-position: 0 60%;
+	}
+}
+
 @media screen and (max-width: 380px) {
 	.infoContainer h1 {
 		margin-top: 10px;

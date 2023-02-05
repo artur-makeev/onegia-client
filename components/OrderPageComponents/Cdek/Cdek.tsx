@@ -147,6 +147,7 @@ export const Cdek = observer(({ setCdekApiError, setCityCenter, setShowMap, addr
 			setBranchesLoaded(false);
 			setLocalDelivery(false);
 			order.setShippingType('');
+			order.setDeliveryPrice(0);
 		}
 
 		if (!selectedRegion) {
@@ -155,6 +156,11 @@ export const Cdek = observer(({ setCdekApiError, setCityCenter, setShowMap, addr
 			setBranchesLoaded(false);
 			setLocalDelivery(false);
 			order.setShippingType('');
+			order.setDeliveryPrice(0);
+		}
+
+		if (!selectedBranch) {
+			order.setDeliveryPrice(0);
 		}
 
 		if (!selectedBranch && !localDelivery) {

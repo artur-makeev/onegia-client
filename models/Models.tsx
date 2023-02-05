@@ -95,6 +95,22 @@ export interface Coords {
 
 export type ShippingType = 'pickup' | 'cdek' | 'yandex' | '';
 
+export interface PaymentParams {
+	MerchantLogin: string,
+	OutSum: string,
+	Description: string,
+	SignatureValue: string,
+	InvId: string,
+	Encoding: string,
+	Receipt: string,
+	IsTest?: '0' | '1',
+}
+
+export interface PaymentUrl {
+	url: string,
+	params: PaymentParams
+}
+
 declare global {
 	interface FormDataValue {
 		uri: string;

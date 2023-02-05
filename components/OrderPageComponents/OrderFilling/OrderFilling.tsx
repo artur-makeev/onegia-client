@@ -38,6 +38,7 @@ export const OrderFilling = observer((): JSX.Element => {
 		formData.append('contact', order.clientInfo.contact);
 		formData.append('shippingType', order.shippingType);
 		formData.append('shippingPrice', order.shippingType === 'pickup' || order.shippingType === 'yandex' ? '0' : order.deliveryPrice.toString());
+		formData.append('productsPrice', JSON.stringify(basket.totalPrice));
 		formData.append('basketProducts', JSON.stringify(toJS(basket.products)));
 		order.setId(await orderConfirm(formData));
 		order.setProducts(basket.products);

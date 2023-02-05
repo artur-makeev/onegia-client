@@ -4,10 +4,67 @@ import Paper from '@mui/material/Paper';
 import { Context } from '../../../pages/_app';
 import { useRouter } from 'next/router';
 import { useContext, useEffect } from 'react';
+import { PaymentParams } from '../../../models/Models';
+import { Button } from '@mui/material';
+import { generatePayment, PayRequest, ReceiptItem } from '../../../http/robokassaApi';
 
 export const OrderConfirmation = () => {
 	const { order } = useContext(Context);
 	const router = useRouter();
+
+	function post(path: string, params: PaymentParams) {
+
+		const form = document.createElement('form');
+		form.method = 'post';
+		form.action = path;
+
+		for (const key in params) {
+			if (Object.prototype.hasOwnProperty.call(params, key)) {
+				const hiddenField: HTMLInputElement = document.createElement('input');
+				hiddenField.type = 'hidden';
+				hiddenField.name = key;
+				hiddenField.value = params[key as keyof PaymentParams] as string;
+
+				form.appendChild(hiddenField);
+			}
+		}
+
+		document.body.appendChild(form);
+		form.submit();
+	}
+
+	const makePayment = () => {
+		const receiptItems: ReceiptItem[] = order.products.map(product => {
+			return {
+				name: `${product.name} ${product.aromaName}`,
+				quantity: JSON.stringify(product.count),
+				sum: JSON.stringify(product.price * product.count),
+				payment_method: 'full_payment',
+				payment_object: 'commodity',
+				tax: 'none'
+			};
+		});
+
+		if (order.shippingType === 'cdek') {
+			receiptItems.push({
+				name: 'доставка',
+				quantity: '1',
+				sum: JSON.stringify(order.deliveryPrice),
+				payment_method: 'full_payment',
+				payment_object: 'service',
+				tax: 'none'
+			});
+		}
+
+		const request: PayRequest = {
+			outSum: JSON.stringify(order.productsPrice),
+			invId: JSON.stringify(order.id),
+			items: receiptItems,
+		};
+		generatePayment(request).then(res => {
+			post(res.url, res.params);
+		});
+	};
 
 	useEffect(() => {
 		if (order.products.length === 0) {
@@ -50,6 +107,15 @@ export const OrderConfirmation = () => {
 				</div>
 				<p>При наличии вопросов обращайтесь по электронной почте:</p>
 				<a href={`mailto:${process.env.NEXT_PUBLIC_SHOP_EMAIL}`}>{process.env.NEXT_PUBLIC_SHOP_EMAIL}</a>
+				<div className={styles.buttonContainer}>
+					<Button
+						onClick={makePayment}
+						variant='contained'
+						className={styles.button}
+					>
+						Оплатить
+					</Button>
+				</div>
 			</Paper>
 			<h4>Товары в заказе</h4>
 			<div className={styles.productsContainer}>

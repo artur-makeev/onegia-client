@@ -19,6 +19,16 @@
 	margin: auto;
 }
 
+.buttonContainer {
+	display: flex;
+	justify-content: center;
+}
+
+.button {
+	border-radius: 0;
+	margin-top: 10px;
+}
+
 @media screen and (max-width: 763px) {
 	.productsContainer {
 		width: 100%;

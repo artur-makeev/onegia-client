@@ -170,8 +170,8 @@ export const Cdek = observer(({ setCdekApiError, setCityCenter, setShowMap, addr
 	}, [selectedRegion, selectedCity, selectedBranch, setSelectedBranch, order.shippingType]);
 
 	useEffect(() => {
-		if (localDelivery && order.shippingType === 'cdek') {
-			setShowMap((selectedCity && !selectedBranch && branchesLoaded && addressesOptions.length > 0) as boolean);
+		if (localDelivery) {
+			setShowMap(false);
 		} else {
 			if (!localDelivery) {
 				setShowMap((selectedCity && !selectedBranch && branchesLoaded && addressesOptions.length > 0) as boolean);

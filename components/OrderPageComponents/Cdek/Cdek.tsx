@@ -200,7 +200,7 @@ export const Cdek = observer(({ setCdekApiError, setCityCenter, setShowMap, addr
 					value={selectedCity}
 					onChange={(event: any, newValue: CityOption | null) => {
 						setSelectedCity(newValue);
-						newValue === 'Петрозаводск' && setLocalDelivery(true);
+						newValue === 'Петрозаводск' ? setLocalDelivery(true) : setLocalDelivery(false);
 					}}
 					disablePortal
 					id="city"

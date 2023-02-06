@@ -19,8 +19,8 @@
 
 .arrow {
 	display: flex;
-	width: 50px;
-	height: 50px;
+	width: 47px;
+	height: 47px;
 	align-items: center;
 	justify-content: center;
 	border: 1px black solid;
@@ -159,6 +159,10 @@
 	.image {
 		height: 300px;
 	}
+
+	.desc {
+		height: 120px;
+	}
 }
 
 @media screen and (max-height: 740px) and (max-width: 500px) {
@@ -176,14 +180,22 @@
 	}
 }
 
+@media screen and (max-height: 610px) and (max-width: 500px) {
+	.title {
+		font-size: 30px;
+	}
+
+	.desc {
+		height: 76.5px;
+		margin: 10px 0;
+		font-size: 17px;
+	}
+}
+
 @media screen and (max-width: 380px) {
 	.infoContainer h1 {
 		margin-top: 10px;
 		margin-bottom: 10px;
-	}
-
-	.desc {
-		margin: 15px 0;
 	}
 
 	.arrow {

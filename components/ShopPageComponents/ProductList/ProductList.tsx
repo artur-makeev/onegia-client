@@ -6,10 +6,10 @@ import { Product } from '../../../models/Models';
 export const ProductList = observer(({ products }: any) => {
 
 	return (
-		<div className={styles.container}>
+		<ul aria-label='products' className={styles.container}>
 			{products.map((product: Product): JSX.Element =>
 				<ProductItem key={product.id} product={product} />
 			)}
-		</div>
+		</ul>
 	);
 });

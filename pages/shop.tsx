@@ -7,7 +7,7 @@ type Props = {
 	products: Product[]
 };
 
-const Shop = observer(({ products }: Props): JSX.Element => {
+const ShopPage = observer(({ products }: Props): JSX.Element => {
 	return (
 		<div className={styles.container}>
 			<ProductList products={products} />
@@ -15,7 +15,7 @@ const Shop = observer(({ products }: Props): JSX.Element => {
 	);
 });
 
-export default Shop;
+export default ShopPage;
 
 export const getStaticProps = async () => {
 	const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/api/product',);

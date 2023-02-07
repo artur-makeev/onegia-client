@@ -64,48 +64,50 @@ const ProductItem = ({ product }: Props) => {
 
 	return (
 		<Paper className={styles.productWrapper}>
-			{view === 1 &&
-				<ProductView1
-					product={product}
-					productVariations={productVariations}
-				/>}
+			<li>
+				{view === 1 &&
+					<ProductView1
+						product={product}
+						productVariations={productVariations}
+					/>}
 
-			{view === 2 &&
-				<CategoryChooseView2
-					product={product}
-					aromaCategories={aromaCategories}
-					chooseAromaCategory={chooseAromaCategory}
-					toView1={() => toView1()}
-					toPreviousView={() => toPreviousView()}
-				/>}
+				{view === 2 &&
+					<CategoryChooseView2
+						product={product}
+						aromaCategories={aromaCategories}
+						chooseAromaCategory={chooseAromaCategory}
+						toView1={() => toView1()}
+						toPreviousView={() => toPreviousView()}
+					/>}
 
-			{view === 3 &&
-				<AromaChooseView3
-					product={product}
-					selectedAromaCategory={selectedAromaCategory}
-					aromas={aromas}
-					chooseAroma={chooseAroma}
-					toView1={() => toView1()}
-					toPreviousView={() => toPreviousView()}
-				/>}
+				{view === 3 &&
+					<AromaChooseView3
+						product={product}
+						selectedAromaCategory={selectedAromaCategory}
+						aromas={aromas}
+						chooseAroma={chooseAroma}
+						toView1={() => toView1()}
+						toPreviousView={() => toPreviousView()}
+					/>}
 
-			{view === 4 &&
-				<AromaInfoView4
-					product={product}
-					selectedAroma={selectedAroma}
-					aromaDescription={aromaDescription}
-					toView1={() => toView1()}
-					toPreviousView={() => toPreviousView()}
-					toNextView={() => toNextView()}
-				/>}
+				{view === 4 &&
+					<AromaInfoView4
+						product={product}
+						selectedAroma={selectedAroma}
+						aromaDescription={aromaDescription}
+						toView1={() => toView1()}
+						toPreviousView={() => toPreviousView()}
+						toNextView={() => toNextView()}
+					/>}
 
-			{view === 5 &&
-				<QuantityChooseView5
-					product={product}
-					selectedAroma={selectedAroma}
-					toView1={() => toView1()}
-					toPreviousView={() => toPreviousView()}
-				/>}
+				{view === 5 &&
+					<QuantityChooseView5
+						product={product}
+						selectedAroma={selectedAroma}
+						toView1={() => toView1()}
+						toPreviousView={() => toPreviousView()}
+					/>}
+			</li>
 		</Paper>
 	);
 };

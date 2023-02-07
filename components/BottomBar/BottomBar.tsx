@@ -60,20 +60,20 @@ const BottomBar = () => {
 					<MenuItem onClick={handleClose}><Link className={styles.dropdown} href={SHOP_ROUTE}>Каталог</Link></MenuItem>
 					<MenuItem onClick={handleClose}><Link className={styles.dropdown} href={BASKET_ROUTE}>Корзина</Link></MenuItem>
 				</Menu>
-				<Link href={SHOP_ROUTE} >
-					<IconButton>
+				<Link href={SHOP_ROUTE}>
+					<IconButton aria-label='Каталог'>
 						<StoreIcon className={styles.navLink} />
 					</IconButton>
 				</Link>
 				<a href={VK_LINK} target='_blank'>
-					<IconButton>
+					<IconButton aria-label='Вконтакте'>
 						<div className={styles.vkLogoContainer}>
 							<Vkontakte hover={false} burgerMenu={false} />
 						</div>
 					</IconButton>
 				</a>
 				<Link href={BASKET_ROUTE}>
-					<IconButton className={styles.navLink}>
+					<IconButton className={styles.navLink} aria-label='Корзина'>
 						<Badge
 							badgeContent={basket.productsQuantity}
 							color='secondary'

@@ -18,7 +18,7 @@ export const PaymentResult = (({ paymentSuccessful }: Props): JSX.Element => {
 					</div>
 					:
 					<div>
-						<h1>Оплата не прошла.</h1>
+						<h1>Оплата не прошла</h1>
 						<p>В ближайшее время с Вами свяжется менеджер, чтобы помочь с оплатой.</p>
 					</div>
 				}

@@ -9,7 +9,8 @@
 @media screen and (max-width: 1281px) {
 	.container {
 		width: 800px;
-		margin: auto;
+
+		/* margin: auto; */
 	}
 }
 

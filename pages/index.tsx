@@ -1,7 +1,7 @@
 import Slider from '../components/Slider/Slider';
 import slidesData from '../components/Slider/slidesData';
 
-export default function Home({ slides }: any) {
+export default function HomePage({ slides }: any) {
   return (
     <Slider slides={slides} />
   );

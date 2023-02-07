@@ -24,7 +24,7 @@ const NavBar = () => {
 							<LogoIcon className={styles.logo} />
 						</Link>
 						<a className={styles.navLinks} href={VK_LINK} target='_blank'>
-							<Button>
+							<Button aria-label='вконтакте'>
 								<div className={styles.vkLogoContainer}>
 									<Vkontakte hover={false} burgerMenu={false} />
 								</div>
@@ -39,7 +39,7 @@ const NavBar = () => {
 							<Button className={styles.navLink}>Контакты</Button>
 						</Link>
 						<Link href={BASKET_ROUTE}>
-							<Button className={styles.navLink}>
+							<Button className={styles.navLink} aria-label='корзина'>
 								<Badge
 									badgeContent={basket.productsQuantity}
 									color='secondary'

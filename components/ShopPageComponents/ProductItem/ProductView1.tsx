@@ -9,6 +9,10 @@ type Props = {
 };
 
 export const ProductView1 = ({ product, productVariations }: Props): JSX.Element => {
+	const myLoader = ({ src, width, quality }: { src: any, width: any, quality?: any }): string => {
+		return `${src}?w=${width}&q=${quality || 100}`;
+	};
+
 	return (
 		<div className={styles.product}>
 			<div>
@@ -17,7 +21,7 @@ export const ProductView1 = ({ product, productVariations }: Props): JSX.Element
 						src={process.env.NEXT_PUBLIC_API_URL + "/static/" + product.img}
 						width={300}
 						height={300}
-						unoptimized={true}
+						loader={myLoader}
 						priority={product.id === 1 ? true : false}
 						alt={product.name} />
 				</div>

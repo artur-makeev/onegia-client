@@ -20,7 +20,7 @@ const NavBar = () => {
 			<AppBar position="fixed">
 				<Toolbar className={styles.navContent}>
 					<div className={styles.logos}>
-						<Link href="/" >
+						<Link href="/" aria-label='главная страница'>
 							<LogoIcon className={styles.logo} />
 						</Link>
 						<a className={styles.navLinks} href={VK_LINK} target='_blank'>

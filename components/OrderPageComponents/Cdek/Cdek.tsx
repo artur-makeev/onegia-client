@@ -134,7 +134,7 @@ export const Cdek = observer(({ setCdekApiError, setCityCenter, setShowMap, addr
 		if (selectedBranch) {
 			calculateDelivery({ to_address: selectedBranch, weight: '500' })
 				.then(res => {
-					order.setDeliveryPrice(res.total_sum);
+					order.setDeliveryPrice(Math.floor(res.total_sum));
 					order.setDeliveryTime(res.period_max);
 				});
 		}

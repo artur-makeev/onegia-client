@@ -70,7 +70,7 @@ export const QuantityChooseView5 = ({ product, selectedAroma, toView1, toPreviou
 			<p className={styles.additinalInfo}>{product.description}</p>
 			<p>{product.price} ₽</p>
 			<h3>Аромат:</h3>
-			<h3 className={styles.aromaHeading}>{selectedAroma.name}</h3>
+			<h3>{selectedAroma.name}</h3>
 			<h3 className={styles.quantityContainer}>
 				<RemoveIcon
 					onClick={() => oneLess()}

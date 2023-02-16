@@ -31,7 +31,7 @@ export const AromaChooseView3 = (
 			<p className={styles.additinalInfo}>{product.description}</p>
 			<p>{product.price} ₽</p>
 			<h3 className={styles.heading}>{selectedAromaCategory.name}</h3>
-			<ul className={styles.aromasByCategory}>
+			<ul>
 				{aromas.map((aroma: Aroma) => {
 					return (
 						<li key={aroma.id}

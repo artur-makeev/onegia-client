@@ -46,7 +46,7 @@ export const Slider = observer(() => {
 				className={`${styles.wrapper} ${slide.slideIndex === 0 ? styles.switchSlide1 :
 					slide.slideIndex === 1 ? styles.switchSlide2 : styles.switchSlide3}`}
 			>
-				{slidesData.map((slide: any, index: any, array: any) => {
+				{slidesData.map((slide: Slide, index: number, array: Slide[]) => {
 					return (
 						<div key={slide.id} className={styles.slide}>
 							<div className={styles.imgContainer}>

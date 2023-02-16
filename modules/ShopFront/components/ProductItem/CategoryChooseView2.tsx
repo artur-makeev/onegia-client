@@ -12,13 +12,14 @@ type Props = {
 	toPreviousView: React.Dispatch<React.SetStateAction<void>>
 };
 
-export const CategoryChooseView2 = ({
-	product,
-	aromaCategories,
-	chooseAromaCategory,
-	toView1,
-	toPreviousView
-}: Props): JSX.Element => {
+export const CategoryChooseView2 = (
+	{
+		product,
+		aromaCategories,
+		chooseAromaCategory,
+		toView1,
+		toPreviousView
+	}: Props): JSX.Element => {
 	return (
 		<>
 			<div className={styles.productHeader}>
@@ -36,7 +37,7 @@ export const CategoryChooseView2 = ({
 			<p>{product.price} ₽</p>
 			<h3>Категории ароматов</h3>
 			<div className={styles.aromaList}>
-				{aromaCategories.map((aromaCategory: any) => {
+				{aromaCategories.map((aromaCategory: AromaCategory) => {
 					return (
 						<Button
 							className={styles.categoryButton}

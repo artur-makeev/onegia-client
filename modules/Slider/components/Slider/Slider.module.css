@@ -7,28 +7,6 @@
 	background-color: #F5F5F5;
 }
 
-.buttons {
-	display: flex;
-	gap: 40px;
-}
-
-.arrows {
-	display: flex;
-	gap: 5px;
-}
-
-.arrow {
-	display: flex;
-	width: 47px;
-	height: 47px;
-	align-items: center;
-	justify-content: center;
-	border: 1px black solid;
-	background-color: transparent;
-	cursor: pointer;
-	opacity: 0.4;
-}
-
 .wrapper {
 	display: flex;
 	height: 100%;
@@ -82,10 +60,32 @@
 	letter-spacing: 3px;
 }
 
+.buttons {
+	display: flex;
+	gap: 40px;
+}
+
 .shopButton {
 	width: 150px;
 	border-radius: 0;
 	font-size: 20px;
+}
+
+.arrows {
+	display: flex;
+	gap: 5px;
+}
+
+.arrow {
+	display: flex;
+	width: 47px;
+	height: 47px;
+	align-items: center;
+	justify-content: center;
+	border: 1px black solid;
+	background-color: transparent;
+	cursor: pointer;
+	opacity: 0.4;
 }
 
 @media screen and (max-width: 1095px) {

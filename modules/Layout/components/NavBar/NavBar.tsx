@@ -15,7 +15,14 @@ import { Vkontakte } from '../../../../UI';
 
 
 export const NavBar = observer(() => {
-	const { basket } = useContext(Context);
+	const { basket, slide } = useContext(Context);
+
+	const handleTab = (e: any) => {
+		if (e.keyCode === 9) {
+			slide.setSlideIndex(0);
+		}
+	};
+
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="fixed">
@@ -40,7 +47,7 @@ export const NavBar = observer(() => {
 							<Button className={styles.navLink}>Контакты</Button>
 						</Link>
 						<Link href={BASKET_ROUTE}>
-							<Button className={styles.navLink} aria-label='корзина'>
+							<Button className={styles.navLink} aria-label='корзина' onKeyDown={(e) => handleTab(e)}>
 								<Badge
 									badgeContent={basket.productsQuantity}
 									color='secondary'
@@ -49,7 +56,6 @@ export const NavBar = observer(() => {
 								</Badge>
 							</Button>
 						</Link>
-
 					</div>
 				</Toolbar>
 			</AppBar>

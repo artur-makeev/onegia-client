@@ -1,4 +1,4 @@
-import { useContext, useRef } from 'react';
+import { useContext, useRef, } from 'react';
 import styles from './Slider.module.css';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
@@ -10,7 +10,8 @@ import Image from 'next/image';
 import Button from '@mui/material/Button';
 import Link from 'next/link';
 
-export const Slider = observer(({ slides }: any) => {
+
+export const Slider = observer(() => {
 	const { slide } = useContext(Context);
 	const itemsRef = useRef<HTMLButtonElement[]>([]);
 
@@ -45,7 +46,7 @@ export const Slider = observer(({ slides }: any) => {
 				className={`${styles.wrapper} ${slide.slideIndex === 0 ? styles.switchSlide1 :
 					slide.slideIndex === 1 ? styles.switchSlide2 : styles.switchSlide3}`}
 			>
-				{slides.map((slide: any, index: any, array: any) => {
+				{slidesData.map((slide: any, index: any, array: any) => {
 					return (
 						<div key={slide.id} className={styles.slide}>
 							<div className={styles.imgContainer}>

@@ -1,17 +1,8 @@
-import { Slider, slidesData } from '../modules/Slider';
+import { Slider } from '../modules/Slider';
 
-export default function HomePage({ slides }: any) {
+
+export default function HomePage() {
   return (
-    <Slider slides={slides} />
+    <Slider />
   );
 }
-
-export const getStaticProps = async () => {
-  const slides = slidesData;
-
-  return {
-    props: {
-      slides: slides,
-    }
-  };
-};

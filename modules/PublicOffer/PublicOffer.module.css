@@ -1,0 +1,13 @@
+.container {
+	display: flex;
+	justify-content: center;
+	padding-top: 15px;
+}
+
+.paper {
+	padding: 25px;
+}
+
+.heading {
+	text-align: center;
+}

@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx';
-import { ClientInfo, BasketProduct, ShippingType } from '../models/Models';
+import { ClientInfo, BasketProduct, ShippingType } from '../../../models/Models';
 
-export default class OrderStore {
+export class OrderStore {
 	_id: number;
 	_confirmed: boolean;
 	_products: BasketProduct[];

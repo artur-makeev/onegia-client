@@ -1,5 +1,5 @@
 import styles from '../styles/page.module.css';
-import { PublicOffer } from '../components/index';
+import { PublicOffer } from '../modules/PublicOffer';
 
 export default function OfferPage() {
 	return (

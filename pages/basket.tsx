@@ -1,9 +1,11 @@
 import { useContext, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import { BasketSummary, OrderProducts } from '../components/index';
+import { BasketProducts } from '../modules/Basket';
 import styles from '../styles/basket.module.css';
 import { Context } from './_app';
 import { useRouter } from 'next/router';
+import { BasketSummary } from '../modules/Basket';
+
 
 const BasketPage = (): JSX.Element => {
 	const { basket } = useContext(Context);
@@ -22,8 +24,7 @@ const BasketPage = (): JSX.Element => {
 			<h1>Корзина</h1>
 			<div className={styles.contentContainer}>
 				<div className={styles.productsContainer}>
-					<OrderProducts products={basket.products} page='basket' />
-
+					<BasketProducts products={basket.products} />
 					<BasketSummary
 						productsQuantity={basket.productsQuantity}
 						totalPrice={basket.totalPrice}

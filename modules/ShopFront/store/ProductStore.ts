@@ -1,8 +1,8 @@
 import { makeAutoObservable } from 'mobx';
-import { fetchProducts } from '../http/productApi';
-import { ProductCategory, Product } from '../models/Models';
+import { fetchProducts } from '../api/productApi';
+import { ProductCategory, Product } from '../../../models/Models';
 
-export default class ProductStore {
+export class ProductStore {
 	_categories: ProductCategory[];
 	_products: Product[];
 	_selectedCategory: ProductCategory;

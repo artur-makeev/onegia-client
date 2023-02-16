@@ -1,4 +1,4 @@
-import { Contacts } from '../components';
+import { Contacts } from '../modules/Contacts';
 import styles from '../styles/page.module.css';
 
 export default function ContactsPage() {

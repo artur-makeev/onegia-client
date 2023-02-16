@@ -1,0 +1,34 @@
+.container {
+	width: 100%;
+	border-radius: 0;
+}
+
+.price {
+	min-width: 80px;
+}
+
+.quantity {
+	display: flex;
+	min-width: 85px;
+	align-items: center;
+	justify-content: center;
+}
+
+@media screen and (max-width: 570px) {
+	.img {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 463px) {
+	.cell {
+		padding: 10px;
+	}
+}
+
+@media screen and (max-width: 340px) {
+	.quantity {
+		min-width: none;
+		flex-direction: column-reverse;
+	}
+}

@@ -1,5 +1,4 @@
-import Slider from '../components/Slider/Slider';
-import slidesData from '../components/Slider/slidesData';
+import { Slider, slidesData } from '../modules/Slider';
 
 export default function HomePage({ slides }: any) {
   return (

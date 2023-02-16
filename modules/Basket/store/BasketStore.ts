@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from 'mobx';
-import { BasketProduct } from '../models/Models';
+import { BasketProduct } from '../../../models/Models';
 
-export default class BasketStore {
+export class BasketStore {
 	_products: BasketProduct[];
 	_loaded: boolean;
 	constructor() {

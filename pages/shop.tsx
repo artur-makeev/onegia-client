@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import styles from '../styles/shop.module.css';
-import { ProductList } from '../components/index';
+import { ProductList } from '../modules/ShopFront';
 import { Product } from '../models/Models';
 
 type Props = {

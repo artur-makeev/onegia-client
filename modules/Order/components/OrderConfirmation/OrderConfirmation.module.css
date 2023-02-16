@@ -1,0 +1,40 @@
+.productsContainer {
+	width: 700px;
+}
+
+.container h1,
+.container h4 {
+	text-align: center;
+}
+
+.orderSummary {
+	width: 700px;
+	padding: 10px;
+}
+
+.row {
+	display: flex;
+	width: 340px;
+	justify-content: space-between;
+	margin: auto;
+}
+
+.buttonContainer {
+	display: flex;
+	justify-content: center;
+}
+
+.button {
+	border-radius: 0;
+	margin-top: 10px;
+}
+
+@media screen and (max-width: 763px) {
+	.productsContainer {
+		width: 100%;
+	}
+
+	.orderSummary {
+		width: auto;
+	}
+}

@@ -8,14 +8,14 @@ import { themeOptions } from '../styles/theme/theme';
 import '../styles/globals.css';
 
 import { createContext, useEffect } from 'react';
-import ProductStore from '../store/ProductStore';
-import BasketStore from '../store/BasketStore';
-import SlideStore from '../store/SlideStore';
+import { ProductStore } from '../modules/ShopFront/store/ProductStore';
+import { BasketStore } from '../modules/Basket';
+import { SlideStore } from '../modules/Slider/store/SlideStore';
+import { OrderStore } from '../modules/Order/store/OrderStore';
 import { Inter } from '@next/font/google';
 import { YMaps } from '@pbe/react-yandex-maps';
-import OrderStore from '../store/OrderStore';
-import NavBar from '../components/NavBar/NavBar';
-import BottomBar from '../components/BottomBar/BottomBar';
+
+import { NavBar, BottomBar } from '../modules/Layout/';
 import Head from 'next/head';
 
 interface AppPropsExtended extends AppProps {

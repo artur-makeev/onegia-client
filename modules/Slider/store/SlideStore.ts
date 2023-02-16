@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 
 
-export default class SlideStore {
+export class SlideStore {
 	_slideIndex: number;
 	_tabUsed: boolean;
 	constructor() {

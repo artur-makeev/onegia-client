@@ -1,0 +1,20 @@
+.container {
+	position: relative;
+	padding: 10px;
+	text-align: center;
+}
+
+.content {
+	position: sticky;
+	top: 70px;
+	padding: 10px;
+}
+
+.summaryRow {
+	display: flex;
+	justify-content: space-between;
+}
+
+.deliveryNote {
+	text-align: left;
+}

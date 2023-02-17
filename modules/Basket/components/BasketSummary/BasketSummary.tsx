@@ -11,7 +11,6 @@ type Props = {
 };
 
 export const BasketSummary = ({ productsQuantity, totalPrice }: Props): JSX.Element => {
-
 	return (
 		<Paper square className={styles.container}>
 			<div className={styles.content}>

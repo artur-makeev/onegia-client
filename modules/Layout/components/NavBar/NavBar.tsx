@@ -13,12 +13,11 @@ import { Context } from '../../../../pages/_app';
 import { observer } from 'mobx-react-lite';
 import { Vkontakte } from '../../../../UI';
 
-
 export const NavBar = observer(() => {
 	const { basket, slide } = useContext(Context);
 
-	const handleTab = (e: any) => {
-		if (e.keyCode === 9) {
+	const handleTab = (e: React.KeyboardEvent) => {
+		if (e.key === 'Tab') {
 			slide.setSlideIndex(0);
 		}
 	};

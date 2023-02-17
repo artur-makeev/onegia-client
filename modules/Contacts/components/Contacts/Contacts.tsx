@@ -1,9 +1,7 @@
 import styles from './Contacts.module.css';
 import Paper from '@mui/material/Paper';
 
-
 export const Contacts = (): JSX.Element => {
-
 	return (
 		<div className={styles.container}>
 			<Paper className={styles.contentContainer}>

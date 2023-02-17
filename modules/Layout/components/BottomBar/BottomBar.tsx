@@ -56,9 +56,30 @@ export const BottomBar = observer(() => {
 						horizontal: 'left',
 					}}
 				>
-					<MenuItem onClick={handleClose}><Link className={styles.dropdown} href={CONTACTS_ROUTE}>Контакты</Link></MenuItem>
-					<MenuItem onClick={handleClose}><Link className={styles.dropdown} href={SHOP_ROUTE}>Каталог</Link></MenuItem>
-					<MenuItem onClick={handleClose}><Link className={styles.dropdown} href={BASKET_ROUTE}>Корзина</Link></MenuItem>
+					<MenuItem onClick={handleClose}>
+						<Link
+							className={styles.dropdown}
+							href={CONTACTS_ROUTE}
+						>
+							Контакты
+						</Link>
+					</MenuItem>
+					<MenuItem onClick={handleClose}>
+						<Link
+							className={styles.dropdown}
+							href={SHOP_ROUTE}
+						>
+							Каталог
+						</Link>
+					</MenuItem>
+					<MenuItem onClick={handleClose}>
+						<Link
+							className={styles.dropdown}
+							href={BASKET_ROUTE}
+						>
+							Корзина
+						</Link>
+					</MenuItem>
 				</Menu>
 				<Link href={SHOP_ROUTE}>
 					<IconButton aria-label='Каталог'>

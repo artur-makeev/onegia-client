@@ -1,1 +1,1 @@
-export * from './Contacts';
+export * from './components/Contacts/Contacts';

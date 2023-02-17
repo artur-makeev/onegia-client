@@ -1,4 +1,3 @@
-//import styles from './YandexMap.module.css';
 import { Map, Placemark } from '@pbe/react-yandex-maps';
 import { useContext } from 'react';
 import { AddressOption, Branch } from '../../../../models/Models';

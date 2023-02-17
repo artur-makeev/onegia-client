@@ -9,10 +9,6 @@
 	border-radius: 0;
 }
 
-.error {
-	font-size: 16px;
-}
-
 .map {
 	display: flex;
 	align-items: center;

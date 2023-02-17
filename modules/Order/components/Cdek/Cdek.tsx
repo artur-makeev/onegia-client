@@ -1,5 +1,5 @@
 import styles from './Cdek.module.css';
-import { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { useState } from 'react';
 import { CityOption, RegionOption, Region, City, AddressOption, Branch, Coords, ShippingType } from '../../../../models/Models';
 import TextField from '@mui/material/TextField';
@@ -13,9 +13,9 @@ type Props = {
 	setCdekApiError: React.Dispatch<React.SetStateAction<boolean>>
 	setCityCenter: React.Dispatch<React.SetStateAction<Coords>>
 	setShowMap: React.Dispatch<React.SetStateAction<boolean>>
-	addresses: any
-	selectedBranch: any,
-	setSelectedBranch: any
+	addresses: React.MutableRefObject<Branch[]>,
+	selectedBranch: AddressOption | null,
+	setSelectedBranch: React.Dispatch<React.SetStateAction<string | null>>
 };
 
 export const Cdek = observer(({ setCdekApiError, setCityCenter, setShowMap, addresses, selectedBranch, setSelectedBranch }: Props): JSX.Element => {
@@ -187,7 +187,7 @@ export const Cdek = observer(({ setCdekApiError, setCityCenter, setShowMap, addr
 		<>
 			<Autocomplete
 				value={selectedRegion}
-				onChange={(event: any, newValue: RegionOption | null) => {
+				onChange={(event: React.FormEvent, newValue: RegionOption | null) => {
 					setSelectedRegion(newValue);
 				}}
 				disablePortal
@@ -198,7 +198,7 @@ export const Cdek = observer(({ setCdekApiError, setCityCenter, setShowMap, addr
 			{selectedRegion && citiesOptions.length > 0 &&
 				<Autocomplete
 					value={selectedCity}
-					onChange={(event: any, newValue: CityOption | null) => {
+					onChange={(event: React.FormEvent, newValue: CityOption | null) => {
 						setSelectedCity(newValue);
 						newValue === 'Петрозаводск' ? setLocalDelivery(true) : setLocalDelivery(false);
 					}}
@@ -229,7 +229,7 @@ export const Cdek = observer(({ setCdekApiError, setCityCenter, setShowMap, addr
 			{!localDelivery && selectedCity && addressesOptions.length > 0 &&
 				<Autocomplete
 					value={selectedBranch}
-					onChange={(event: any, newValue: AddressOption | null) => {
+					onChange={(event: React.FormEvent, newValue: AddressOption | null) => {
 						setSelectedBranch(newValue);
 						order.setShippingType('cdek');
 					}}

@@ -3,10 +3,6 @@
 	justify-content: space-between;
 }
 
-.navLink {
-	color: white;
-}
-
 .logos {
 	display: flex;
 	align-items: center;
@@ -16,6 +12,10 @@
 .logo {
 	height: 50px;
 	margin: 10px 0;
+}
+
+.navLink {
+	color: white;
 }
 
 .vkLogoContainer {

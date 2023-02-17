@@ -8,13 +8,11 @@ import { Button } from '@mui/material';
 import { generatePayment, PayRequest, ReceiptItem } from '../../api/robokassaApi';
 import { OrderProducts } from '../OrderProducts/OrderProducts';
 
-
 export const OrderConfirmation = () => {
 	const { order } = useContext(Context);
 	const router = useRouter();
 
 	function post(path: string, params: PaymentParams) {
-
 		const form = document.createElement('form');
 		form.method = 'post';
 		form.action = path;
@@ -25,7 +23,6 @@ export const OrderConfirmation = () => {
 				hiddenField.type = 'hidden';
 				hiddenField.name = key;
 				hiddenField.value = params[key as keyof PaymentParams] as string;
-
 				form.appendChild(hiddenField);
 			}
 		}

@@ -24,7 +24,7 @@ type Props = {
 
 export const OrderProducts = observer(({ products }: Props): JSX.Element => {
 
-	const myLoader = ({ src, width, quality }: { src: any, width: any, quality?: any }): string => {
+	const myLoader = ({ src, width, quality }: { src: string, width: number, quality?: number }): string => {
 		return `${src}?w=${width}&q=${quality || 100}`;
 	};
 

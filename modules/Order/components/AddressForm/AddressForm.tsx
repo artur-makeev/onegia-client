@@ -1,5 +1,5 @@
 import styles from './AddressForm.module.css';
-import { useEffect, useRef, useContext } from 'react';
+import { useEffect, useRef, useContext, MutableRefObject } from 'react';
 import { useState } from 'react';
 import { Contact, AddressOption, Branch, Coords } from '../../../../models/Models';
 import TextField from '@mui/material/TextField';
@@ -31,7 +31,7 @@ export const AddressForm = ({ setFormValid }: Props): JSX.Element => {
 
 	const [cdekApiError, setCdekApiError] = useState(false);
 
-	const addresses = useRef<Branch[]>([]);
+	const addresses = useRef([]) as MutableRefObject<Branch[]>;
 	const [selectedBranch, setSelectedBranch] = useState<AddressOption | null>(null);
 
 	const [cityCenter, setCityCenter] = useState<Coords>({ latitude: 61.789263, longitude: 34.372298 });
@@ -41,6 +41,7 @@ export const AddressForm = ({ setFormValid }: Props): JSX.Element => {
 		setEmail(e.target.value);
 		// eslint-disable-next-line
 		const re = /^\S+@\S+\.\S+$/;
+
 		if (!re.test(String(e.target.value).toLowerCase())) {
 			setEmailError('Некорректный email');
 			setEmailIncorrect(true);
@@ -48,7 +49,6 @@ export const AddressForm = ({ setFormValid }: Props): JSX.Element => {
 			setEmailError('');
 			setEmailIncorrect(false);
 		}
-
 	};
 
 	useEffect(() => {

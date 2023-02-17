@@ -9,21 +9,23 @@
 	gap: 15px;
 }
 
-.orderForm {
-	display: flex;
-	flex-direction: column;
-}
-
 .addressContainer {
 	position: sticky;
 	top: 90px;
 	height: 100%;
 }
 
-.summaryItem {
+.orderForm {
 	display: flex;
-	justify-content: space-between;
-	margin-top: 15px;
+	flex-direction: column;
+}
+
+.offer {
+	margin: 8px;
+}
+
+.orderButton {
+	margin: 8px;
 }
 
 .orderConfirm {
@@ -34,14 +36,6 @@
 
 .orderResume {
 	text-align: center;
-}
-
-.orderButton {
-	margin: 8px;
-}
-
-.offer {
-	margin: 8px;
 }
 
 .orderTotal {

@@ -19,7 +19,7 @@ type Props = {
 };
 
 export const Cdek = observer(({ setCdekApiError, setCityCenter, setShowMap, addresses, selectedBranch, setSelectedBranch }: Props): JSX.Element => {
-	const { order } = useContext(Context);
+	const { order, basket } = useContext(Context);
 	const regions = useRef<Region[]>([]);
 	const [regionOptions, setRegionOptions] = useState<RegionOption[]>([]);
 	const [selectedRegion, setSelectedRegion] = useState<RegionOption | null>(null);
@@ -132,7 +132,7 @@ export const Cdek = observer(({ setCdekApiError, setCityCenter, setShowMap, addr
 
 	useEffect(() => {
 		if (selectedBranch) {
-			calculateDelivery({ to_address: selectedBranch, weight: '500' })
+			calculateDelivery({ to_address: selectedBranch, packageProducts: basket.productsIdsWithCount })
 				.then(res => {
 					order.setDeliveryPrice(Math.floor(res.total_sum));
 					order.setDeliveryTime(res.period_max);

@@ -30,7 +30,8 @@ export const QuantityChooseView5 = ({ product, selectedAroma, toView1, toPreviou
 			product.img,
 			selectedAroma.id,
 			selectedAroma.name,
-			quantityValue.current
+			quantityValue.current,
+			product.weight
 		);
 
 		setTimeout(() => {

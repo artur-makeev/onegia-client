@@ -1,8 +1,9 @@
 import { $host } from '../../../api/index';
+import { ProductsWithIds } from '../../../models/Models';
 
 interface Request {
 	to_address: string,
-	weight: string
+	packageProducts: ProductsWithIds
 }
 
 interface DeliveryInfo {

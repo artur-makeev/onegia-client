@@ -6,6 +6,7 @@ export const mockProducts = [
 		"img": "candle-50.png",
 		"description": "8 часов горения",
 		"categoryId": 1,
+		"weight": 160,
 		"createdAt": "2023-01-26T13:41:52.115Z",
 		"updatedAt": "2023-01-26T13:41:52.115Z"
 	},
@@ -16,6 +17,7 @@ export const mockProducts = [
 		"img": "candle-150.png",
 		"description": "24 часа горения",
 		"categoryId": 1,
+		"weight": 350,
 		"createdAt": "2023-01-26T13:43:12.762Z",
 		"updatedAt": "2023-01-26T13:43:12.762Z"
 	},
@@ -26,6 +28,7 @@ export const mockProducts = [
 		"img": "candle-250.png",
 		"description": "40 часов горения",
 		"categoryId": 1,
+		"weight": 420,
 		"createdAt": "2023-01-26T13:43:12.762Z",
 		"updatedAt": "2023-01-26T13:43:12.762Z"
 	}

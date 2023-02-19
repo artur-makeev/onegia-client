@@ -16,7 +16,7 @@ export const ProductQuantity = observer(({ productId, count, aromaId }: Props): 
 	const [counter, setCounter] = useState(count);
 
 	const oneMore = (id: number) => {
-		basket.addProduct(id, '', 0, '', aromaId, '', 1);
+		basket.addProduct(id, '', 0, '', aromaId, '', 1, 0);
 		setCounter(counter + 1);
 	};
 

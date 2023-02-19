@@ -6,7 +6,8 @@ export const mockBasket = [
 		img: "perfume-10.png",
 		aromaId: 59,
 		aromaName: "Pride",
-		count: 1
+		count: 1,
+		weight: 50
 	},
 	{
 		productId: 3,
@@ -15,6 +16,7 @@ export const mockBasket = [
 		img: "candle-250.png",
 		aromaId: 22,
 		aromaName: "Груша в карамели",
-		count: 2
+		count: 2,
+		weight: 420
 	}
 ];

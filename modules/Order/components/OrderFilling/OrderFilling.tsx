@@ -12,6 +12,7 @@ import { observer } from 'mobx-react-lite';
 import Link from 'next/link';
 import { OFFER_ROUTE } from '../../../../utilities/consts';
 import { OrderProducts } from '../OrderProducts/OrderProducts';
+import { daySpelling } from '../../helpers/daySpelling';
 
 
 export const OrderFilling = observer((): JSX.Element => {
@@ -88,6 +89,7 @@ export const OrderFilling = observer((): JSX.Element => {
 										<h4>Итого</h4>
 										<h4>{basket.totalPrice + order.deliveryPrice} ₽</h4>
 									</div>
+									<p>Доставка займет {order.deliveryTime} {daySpelling(order.deliveryTime)}</p>
 								</div>
 							}
 							{order.shippingType === 'pickup' &&
@@ -111,6 +113,7 @@ export const OrderFilling = observer((): JSX.Element => {
 							{order.shippingType === 'yandex' &&
 								<p>доставка оплачивается отдельно</p>
 							}
+							<p>Производство займет 3 дня</p>
 						</Paper>
 						<OrderProducts products={basket.products} />
 					</div>

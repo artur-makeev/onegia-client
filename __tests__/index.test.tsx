@@ -1,7 +1,7 @@
 import React from 'react';
 import HomePage from '../pages';
 import { render, screen } from '@testing-library/react';
-import { slidesData, SlideStore } from '../modules/Slider';
+import { SlideStore } from '../modules/Slider';
 import { Context } from '../pages/_app';
 
 describe('Home page', () => {
@@ -11,7 +11,7 @@ describe('Home page', () => {
 			// eslint-disable-next-line
 			// @ts-ignore
 			<Context.Provider value={{ slide }}>
-				<HomePage slides={slidesData} />
+				<HomePage />
 			</Context.Provider>
 		);
 		screen.getByRole('heading', { name: /Cвечи/i });

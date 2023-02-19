@@ -20,6 +20,7 @@ export const BasketSummary = ({ productsQuantity, totalPrice }: Props): JSX.Elem
 					<p>{totalPrice} ₽</p>
 				</div>
 				<p className={styles.deliveryNote}>*доставка оплачивается отдельно</p>
+				<p className={styles.deliveryNote}>*производство занимает до 3х дней.</p>
 				<p className={styles.deliveryNote}>
 					<Link href={OFFER_ROUTE}>
 						Публичная оферта

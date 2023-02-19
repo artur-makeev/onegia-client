@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from 'mobx';
-import { BasketProduct } from '../../../models/Models';
+import { BasketProduct, ProductsWithIds } from '../../../models/Models';
 
 export class BasketStore {
 	_products: BasketProduct[];
@@ -38,6 +38,14 @@ export class BasketStore {
 		return priceCounter;
 	}
 
+	get productsIdsWithCount() {
+		const result: ProductsWithIds = {};
+		this.products.forEach((p) => {
+			result[`${p.productId}`] = p.count;
+		});
+		return result;
+	}
+
 	setLoaded(value: boolean) {
 		this._loaded = value;
 	}
@@ -46,7 +54,7 @@ export class BasketStore {
 		this.setProducts([]);
 	}
 
-	addProduct(productId: number, productName: string, price: number, img: string, aromaId: number, aromaName: string, quantity: number) {
+	addProduct(productId: number, productName: string, price: number, img: string, aromaId: number, aromaName: string, quantity: number, weight: number) {
 		if (!productId) {
 			throw new Error('productId was not specified');
 		}
@@ -71,7 +79,8 @@ export class BasketStore {
 				"img": img,
 				"aromaId": aromaId,
 				"aromaName": aromaName,
-				"count": quantity
+				"count": quantity,
+				"weight": weight
 			});
 		}
 

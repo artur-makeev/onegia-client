@@ -6,9 +6,8 @@ export interface Product {
 	price: number,
 	img: string,
 	description: string,
-	createdAt: string | null,
-	updatedAt: string | null,
-	categoryId: number
+	categoryId: number,
+	weight: number
 }
 
 export interface ProductCategory {
@@ -25,8 +24,11 @@ export interface BasketProduct {
 	img: string,
 	aromaId: number,
 	aromaName: string,
-	count: number
+	count: number,
+	weight: number,
 }
+
+export interface OrderProduct extends BasketProduct {}
 
 export type Contact = 'call' | 'whatsup' | 'telegram' | 'email' | '';
 
@@ -110,6 +112,8 @@ export interface PaymentUrl {
 	url: string,
 	params: PaymentParams
 }
+
+export type ProductsWithIds = Record<string, number>;
 
 declare global {
 	interface FormDataValue {

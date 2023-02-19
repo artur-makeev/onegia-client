@@ -7,7 +7,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Image from 'next/image';
 import { observer } from 'mobx-react-lite';
-import { BasketProduct } from '../../../../models/Models';
+import { OrderProduct } from '../../../../models/Models';
 
 function createData(
 	image: string,
@@ -19,7 +19,7 @@ function createData(
 }
 
 type Props = {
-	products: BasketProduct[]
+	products: OrderProduct[]
 };
 
 export const OrderProducts = observer(({ products }: Props): JSX.Element => {

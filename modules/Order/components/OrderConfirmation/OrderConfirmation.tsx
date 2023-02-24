@@ -11,6 +11,7 @@ import { OrderProducts } from '../OrderProducts/OrderProducts';
 export const OrderConfirmation = () => {
 	const { order } = useContext(Context);
 	const router = useRouter();
+	console.log(order.deliveryPrice);
 
 	function post(path: string, params: PaymentParams) {
 		const form = document.createElement('form');
@@ -47,7 +48,7 @@ export const OrderConfirmation = () => {
 			receiptItems.push({
 				name: 'доставка',
 				quantity: '1',
-				sum: JSON.stringify(order.deliveryPrice),
+				sum: order.deliveryPrice.toString(),
 				payment_method: 'full_payment',
 				payment_object: 'service',
 				tax: 'none'
@@ -55,8 +56,8 @@ export const OrderConfirmation = () => {
 		}
 
 		const request: PayRequest = {
-			outSum: JSON.stringify(order.productsPrice),
-			invId: JSON.stringify(order.id),
+			outSum: (order.productsPrice + order.deliveryPrice).toString(),
+			invId: order.id.toString(),
 			items: receiptItems,
 		};
 		generatePayment(request).then(res => {
@@ -105,7 +106,10 @@ export const OrderConfirmation = () => {
 						{order.shippingType === 'pickup' &&
 							<div>Самовывоз</div>
 						}
-						{order.shippingType === 'cdek' || order.shippingType === 'pickup' &&
+						{order.shippingType === 'cdek' &&
+							<div>{order.deliveryPrice} ₽</div>
+						}
+						{order.shippingType === 'pickup' &&
 							<div>{order.deliveryPrice} ₽</div>
 						}
 					</div>

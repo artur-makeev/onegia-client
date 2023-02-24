@@ -23,7 +23,7 @@ export const AddressForm = ({ setFormValid }: Props): JSX.Element => {
 	const [phone, setPhone] = useState('');
 	const [address, setAddress] = useState('');
 
-	const [contact, setContact] = useState<Contact>('');
+	const [contact, setContact] = useState<Contact>('whatsup');
 
 	const [emailDirty, setEmailDirty] = useState(false);
 	const [emailIncorrect, setEmailIncorrect] = useState(false);
@@ -105,7 +105,8 @@ export const AddressForm = ({ setFormValid }: Props): JSX.Element => {
 				variant="outlined"
 			/>
 			<TextField
-				label="отчество"
+				required
+				label="Отчество"
 				value={fatherName}
 				onChange={(e) => setFatherName(e.target.value)}
 				variant="outlined"
@@ -134,7 +135,7 @@ export const AddressForm = ({ setFormValid }: Props): JSX.Element => {
 				onChange={(e) => setContact(e.target.value as Contact)}
 				select
 			>
-				<MenuItem className={styles.contactItem} value={'позвонить'}>Позвонить</MenuItem>
+				<MenuItem className={styles.contactItem} value={'call'}>Позвонить</MenuItem>
 				<MenuItem className={styles.contactItem} value={'whatsup'}>Whatsup</MenuItem>
 				<MenuItem className={styles.contactItem} value={'telegram'}>Telegram</MenuItem>
 				<MenuItem className={styles.contactItem} value={'email'}>Email</MenuItem>

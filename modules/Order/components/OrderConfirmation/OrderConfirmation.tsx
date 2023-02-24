@@ -75,7 +75,15 @@ export const OrderConfirmation = () => {
 		<div className={styles.container}>
 			<h1>{`Заказ №${order.id} оформлен`}</h1>
 			<Paper square className={styles.orderSummary}>
-				<p>В ближайшее время с Вами свяжется менеджер для обсуждения делатей доставки и оплаты.</p>
+				<div className={styles.buttonContainer}>
+					<Button
+						onClick={makePayment}
+						variant='contained'
+						className={styles.button}
+					>
+						Оплатить
+					</Button>
+				</div>
 				<p>Получатель: {`${order.clientInfo.lastName} ${order.clientInfo.firstName} ${order.clientInfo.fatherName}`}</p>
 				<p>Информация по заказу отправлена на почту: {order.clientInfo.email}</p>
 				<p>Ваш телефон: {order.clientInfo.phone}</p>
@@ -88,32 +96,31 @@ export const OrderConfirmation = () => {
 				</div>
 				<div>
 					<div className={styles.row}>
-						{order.shippingType === 'cdek' ?
+						{order.shippingType === 'cdek' &&
 							<div>Доставка (СДЭК)</div>
-							:
+						}
+						{order.shippingType === 'yandex' &&
+							<div>Яндекс доставка оплачивается отдельно</div>
+						}
+						{order.shippingType === 'pickup' &&
 							<div>Самовывоз</div>
 						}
-						<div>{order.deliveryPrice} ₽</div>
+						{order.shippingType === 'cdek' || order.shippingType === 'pickup' &&
+							<div>{order.deliveryPrice} ₽</div>
+						}
 					</div>
-					<div className={styles.row}>
-						<div>Итого</div>
-						<div>{order.productsPrice + order.deliveryPrice} ₽</div>
-					</div>
+					{order.shippingType !== 'yandex' &&
+						<div className={styles.row}>
+							<div>Итого</div>
+							<div>{order.productsPrice + order.deliveryPrice} ₽</div>
+						</div>
+					}
 					{order.shippingType === 'pickup' &&
 						<p>Самовывоз осуществляется из магазина "Твоя полка" в тц "Пирамида" по адресу: ул.Кирова д.19а (ежедневно с 10:00 до 20:00)</p>
 					}
 				</div>
 				<p>При наличии вопросов обращайтесь по электронной почте:</p>
 				<a href={`mailto:${process.env.NEXT_PUBLIC_SHOP_EMAIL}`}>{process.env.NEXT_PUBLIC_SHOP_EMAIL}</a>
-				<div className={styles.buttonContainer}>
-					<Button
-						onClick={makePayment}
-						variant='contained'
-						className={styles.button}
-					>
-						Оплатить
-					</Button>
-				</div>
 			</Paper>
 			<h4>Товары в заказе</h4>
 			<div className={styles.productsContainer}>

@@ -101,3 +101,11 @@
 .basketIcon {
 	margin-right: 8px;
 }
+
+.aromaSearch {
+	margin: 10px 5px 5px;
+}
+
+.productWrapper fieldset {
+	border-radius: 0;
+}

@@ -10,18 +10,18 @@ type Props = {
 	selectedAroma: Aroma,
 	aromaDescription: AromaDescription,
 	toView1: React.Dispatch<React.SetStateAction<void>>,
-	toPreviousView: React.Dispatch<React.SetStateAction<void>>,
+	setView2: React.Dispatch<React.SetStateAction<void>>,
 	toNextView: React.Dispatch<React.SetStateAction<void>>
 };
 
 export const AromaInfoView4 = (
-	{ product, selectedAroma, aromaDescription, toView1, toPreviousView, toNextView }: Props): JSX.Element => {
+	{ product, selectedAroma, aromaDescription, toView1, setView2, toNextView }: Props): JSX.Element => {
 	return (
 		<>
 			<div className={styles.productHeader}>
 				<ArrowBackIcon
 					className={styles.backIcon}
-					onClick={() => toPreviousView()}
+					onClick={() => setView2()}
 				/>
 				<h3>{product.name}</h3>
 				<CloseIcon

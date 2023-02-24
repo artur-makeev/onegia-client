@@ -4,7 +4,7 @@ export const daySpelling = (numberOfDays: number): string => {
 
 	if (lastDigit == 1) {
 		spelling = 'день';
-	} else if (2 >= lastDigit && lastDigit <= 4) {
+	} else if (2 <= lastDigit && lastDigit <= 4) {
 		spelling = 'дня';
 	} else {
 		spelling = 'дней';

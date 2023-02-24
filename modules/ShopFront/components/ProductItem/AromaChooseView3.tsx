@@ -7,14 +7,14 @@ import { Button } from '@mui/material';
 type Props = {
 	product: Product,
 	selectedAromaCategory: AromaCategory,
-	aromas: Aroma[],
-	chooseAroma: (aromaCategory: AromaCategory) => void,
+	aromasByCategory: Aroma[],
+	chooseAroma: (aroma: Aroma) => void,
 	toView1: React.Dispatch<React.SetStateAction<void>>,
 	toPreviousView: React.Dispatch<React.SetStateAction<void>>
 };
 
 export const AromaChooseView3 = (
-	{ product, selectedAromaCategory, aromas, chooseAroma, toView1, toPreviousView }: Props): JSX.Element => {
+	{ product, selectedAromaCategory, aromasByCategory, chooseAroma, toView1, toPreviousView }: Props): JSX.Element => {
 	return (
 		<>
 			<div className={styles.productHeader}>
@@ -32,7 +32,7 @@ export const AromaChooseView3 = (
 			<p>{product.price} ₽</p>
 			<h3 className={styles.heading}>{selectedAromaCategory.name}</h3>
 			<ul>
-				{aromas.map((aroma: Aroma) => {
+				{aromasByCategory.map((aroma: Aroma) => {
 					return (
 						<li key={aroma.id}
 							onClick={() => { chooseAroma(aroma); }}

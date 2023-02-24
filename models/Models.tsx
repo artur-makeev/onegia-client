@@ -56,7 +56,8 @@ export interface AromaCategory {
 
 export interface Aroma {
 	id: number,
-	name: string
+	name: string,
+	aromaCategory: number
 }
 
 export interface AromaDescription {

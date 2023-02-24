@@ -69,7 +69,9 @@ export const BasketProducts = observer(({ products }: Props): JSX.Element => {
 							</TableCell>
 							<TableCell
 								className={`${styles.price} ${styles.cell}`}
-								align="right">{row.price} ₽
+								align="right"
+							>
+								{row.price} ₽
 							</TableCell>
 							<TableCell align="right" className={styles.cell}>
 								<div className={styles.quantity}>

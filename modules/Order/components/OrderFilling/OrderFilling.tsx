@@ -36,9 +36,10 @@ export const OrderFilling = observer((): JSX.Element => {
 		formData.append('fatherName', order.clientInfo.fatherName);
 		formData.append('email', order.clientInfo.email);
 		formData.append('phone', order.clientInfo.phone);
-		formData.append('address', order.shippingType === 'pickup' ? order.shippingType : order.clientInfo.address);
+		formData.append('address', order.shippingType === 'cdek' ? order.clientInfo.address : 'Петрозаводск');
 		formData.append('contact', order.clientInfo.contact);
 		formData.append('shippingType', order.shippingType);
+		formData.append('shippingTime', order.deliveryTime.toString());
 		formData.append('shippingPrice', order.shippingType === 'pickup' || order.shippingType === 'yandex'
 			? '0' : order.deliveryPrice.toString());
 		formData.append('productsPrice', JSON.stringify(basket.totalPrice));
@@ -89,7 +90,6 @@ export const OrderFilling = observer((): JSX.Element => {
 										<h4>Итого</h4>
 										<h4>{basket.totalPrice + order.deliveryPrice} ₽</h4>
 									</div>
-									<p>Доставка займет {order.deliveryTime} {daySpelling(order.deliveryTime)}</p>
 								</div>
 							}
 							{order.shippingType === 'pickup' &&
@@ -105,7 +105,7 @@ export const OrderFilling = observer((): JSX.Element => {
 									<div>
 										<p>Самовывоз осуществляется из магазина</p>
 										<p>"Твоя полка" в тц "Пирамида"</p>
-										<p>По адресу: ул.Кирова д.19а</p>
+										<p>По адресу: ул. Кирова д. 19а</p>
 										<p>Ежедневно с 10:00 до 20:00</p>
 									</div>
 								</div>
@@ -114,6 +114,9 @@ export const OrderFilling = observer((): JSX.Element => {
 								<p>доставка оплачивается отдельно</p>
 							}
 							<p>Производство займет 3 дня</p>
+							{order.shippingType === 'cdek' && order.deliveryPrice !== 0 &&
+								<p>Доставка займет {order.deliveryTime} {daySpelling(order.deliveryTime)}</p>
+							}
 						</Paper>
 						<OrderProducts products={basket.products} />
 					</div>

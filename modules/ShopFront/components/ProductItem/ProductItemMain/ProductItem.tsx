@@ -1,5 +1,5 @@
 
-import { fetchAromaCategories, fetchAromaInfos, fetchAromas } from '../../../api/aromaApi';
+import { fetchAromaInfos, fetchAromas } from '../../../api/aromaApi';
 import { useState } from 'react';
 import { CategoryChooseView2 } from '../CategoryChooseView2';
 import { ProductView1 } from '../ProductView1';
@@ -18,7 +18,8 @@ const ProductItem = ({ product }: Props) => {
 	const [aromaCategories, setAromaCategories] = useState([]);
 	const [selectedAromaCategory, setSelectedAromaCategory] = useState<ProductCategory>({ id: 0, name: '' });
 	const [aromas, setAromas] = useState<Aroma[]>([]);
-	const [selectedAroma, setSelectedAroma] = useState<Aroma>({ id: 0, name: '' });
+	const [aromasByCategory, setAromasByCategory] = useState<Aroma[]>([]);
+	const [selectedAroma, setSelectedAroma] = useState<Aroma>({ id: 0, name: '', aromaCategory: 0 });
 	const [aromaDescription, setAromaDescription] = useState<AromaDescription>({ top: '', heart: '', base: '' });
 
 	const [view, setView] = useState<number>(1);
@@ -33,27 +34,29 @@ const ProductItem = ({ product }: Props) => {
 	};
 
 	const productVariations = async () => {
+		const data = await fetchAromas(product.id);
+		setAromas(data.aromas);
 		toNextView();
-		const data = await fetchAromaCategories(product.categoryId);
-		setAromaCategories(data);
-		if (data.length < 2) {
-			setSelectedAromaCategory(data[0]);
+		if (data.aromaCategories.length < 2) {
+			setSelectedAromaCategory(data.aromaCategories[0]);
+			setAromasByCategory(data.aromas);
 			setView(3);
-			const aromas = await fetchAromas(data[0].id);
-			setAromas(aromas);
 		}
+		setAromaCategories(data.aromaCategories);
+
 	};
 
 	const chooseAromaCategory = async (aromaCategory: AromaCategory) => {
 		setSelectedAromaCategory(aromaCategory);
 		toNextView();
-		const data = await fetchAromas(aromaCategory.id);
-		setAromas(data);
+		setAromasByCategory(aromas.filter((aroma) => {
+			return aroma.aromaCategory === aromaCategory.id;
+		}));
 	};
 
 	const chooseAroma = async (aroma: Aroma) => {
 		setSelectedAroma(aroma);
-		toNextView();
+		setView(4);
 		getAromaDescription(aroma.id);
 	};
 
@@ -76,6 +79,8 @@ const ProductItem = ({ product }: Props) => {
 						product={product}
 						aromaCategories={aromaCategories}
 						chooseAromaCategory={chooseAromaCategory}
+						aromas={aromas}
+						chooseAroma={chooseAroma}
 						toView1={() => toView1()}
 						toPreviousView={() => toPreviousView()}
 					/>}
@@ -84,7 +89,7 @@ const ProductItem = ({ product }: Props) => {
 					<AromaChooseView3
 						product={product}
 						selectedAromaCategory={selectedAromaCategory}
-						aromas={aromas}
+						aromasByCategory={aromasByCategory}
 						chooseAroma={chooseAroma}
 						toView1={() => toView1()}
 						toPreviousView={() => toPreviousView()}
@@ -96,7 +101,7 @@ const ProductItem = ({ product }: Props) => {
 						selectedAroma={selectedAroma}
 						aromaDescription={aromaDescription}
 						toView1={() => toView1()}
-						toPreviousView={() => toPreviousView()}
+						setView2={() => setView(2)}
 						toNextView={() => toNextView()}
 					/>}
 

@@ -93,7 +93,7 @@ const App: React.FunctionComponent<AppPropsExtended> = (props) => {
             </Head>
             <YMInitializer
               accounts={[92600591]}
-              options={{ webvisor: true, defer: true }}
+              options={{ webvisor: false, defer: true }}
               version="2"
             />
             <div className={inter.className}>

@@ -9,7 +9,12 @@ export default class MyDocument extends Document {
     return (
       <Html lang="ru">
         <Head>
-          <meta name="description" content="Ароматические свечи, твердые духи" />
+          <meta name="description" content="Интернет-магазин товаров ручной работы. Ароматические свечи, твердые духи, диффузоры и интерьерные спреи." />
+          <meta property="og:title" content="Onegia" />
+          <meta property="og:description" content="Интернет-магазин товаров ручной работы. Ароматические свечи, твердые духи, диффузоры и интерьерные спреи." />
+          <meta property="og:locale" content="ru_RU" />
+          <meta property="og:image" content="https://onegia.ru/og/candle.png" />
+          <meta name="yandex-verification" content="c0ac822a3267b72f" />
           <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
           <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
           <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />

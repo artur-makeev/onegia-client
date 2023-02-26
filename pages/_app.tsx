@@ -18,6 +18,9 @@ import { YMaps } from '@pbe/react-yandex-maps';
 import { NavBar, BottomBar } from '../modules/Layout/';
 import Head from 'next/head';
 
+import ym from 'react-yandex-metrika';
+import { YMInitializer } from 'react-yandex-metrika';
+
 interface AppPropsExtended extends AppProps {
   emotionCache?: EmotionCache;
 }
@@ -43,7 +46,13 @@ export const Context = createContext({
 });
 
 const App: React.FunctionComponent<AppPropsExtended> = (props) => {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const { Component, emotionCache = clientSideEmotionCache, pageProps, router } = props;
+  router.events.on('routeChangeComplete', (url: string) => {
+    if (typeof window !== 'undefined') {
+      ym('hit', url);
+    }
+  });
+
   useEffect(() => {
     const savedProducts = localStorage.getItem('products');
     if (savedProducts !== null) {
@@ -66,7 +75,13 @@ const App: React.FunctionComponent<AppPropsExtended> = (props) => {
             <Head>
               <title>Onegia</title>
               <meta name="viewport" content="width=device-width, initial-scale=1" />
+              <link rel="preconnect" href="https://mc.yandex.ru" />
             </Head>
+            <YMInitializer
+              accounts={[]}
+              options={{ webvisor: true, defer: true }}
+              version="2"
+            />
             <div className={inter.className}>
               <NavBar />
               <Component {...pageProps} />

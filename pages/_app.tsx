@@ -20,6 +20,7 @@ import Head from 'next/head';
 
 import ym from 'react-yandex-metrika';
 import { YMInitializer } from 'react-yandex-metrika';
+import { useRouter } from 'next/router';
 
 interface AppPropsExtended extends AppProps {
   emotionCache?: EmotionCache;
@@ -46,13 +47,26 @@ export const Context = createContext({
 });
 
 const App: React.FunctionComponent<AppPropsExtended> = (props) => {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps, router } = props;
-  /*  router.events.on('routeChangeComplete', (url: string) => {
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleRouteChange = (url: string) => {
       if (typeof window !== 'undefined') {
         ym('hit', url);
       }
-    });
-  */
+    };
+
+    router.events.on('routeChangeComplete', handleRouteChange);
+
+    // If the component is unmounted, unsubscribe
+    // from the event with the `off` method:
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     const savedProducts = localStorage.getItem('products');
     if (savedProducts !== null) {

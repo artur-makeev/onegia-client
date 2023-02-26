@@ -78,7 +78,7 @@ const App: React.FunctionComponent<AppPropsExtended> = (props) => {
               <link rel="preconnect" href="https://mc.yandex.ru" />
             </Head>
             <YMInitializer
-              accounts={[]}
+              accounts={[92600591]}
               options={{ webvisor: true, defer: true }}
               version="2"
             />

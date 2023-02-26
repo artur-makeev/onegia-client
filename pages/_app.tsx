@@ -47,12 +47,12 @@ export const Context = createContext({
 
 const App: React.FunctionComponent<AppPropsExtended> = (props) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps, router } = props;
-  router.events.on('routeChangeComplete', (url: string) => {
-    if (typeof window !== 'undefined') {
-      ym('hit', url);
-    }
-  });
-
+  /*  router.events.on('routeChangeComplete', (url: string) => {
+      if (typeof window !== 'undefined') {
+        ym('hit', url);
+      }
+    });
+  */
   useEffect(() => {
     const savedProducts = localStorage.getItem('products');
     if (savedProducts !== null) {

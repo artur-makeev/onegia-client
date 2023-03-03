@@ -6,7 +6,6 @@ export const fetchCategories = async () => {
 	return data;
 };
 
-
 export const fetchProducts = async (categoryId: number | null, page: number, limit: number) => {
 	const { data } = await $host.get('api/product', {
 		params: {

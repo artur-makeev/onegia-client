@@ -1,5 +1,5 @@
 import styles from './AddressForm.module.css';
-import { useEffect, useRef, useContext, MutableRefObject } from 'react';
+import { useEffect, useRef, MutableRefObject } from 'react';
 import { useState } from 'react';
 import { Contact, AddressOption, Branch, Coords } from '../../../../models/Models';
 import TextField from '@mui/material/TextField';
@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem'; '@mui/material/Select';
 import { YandexMap } from '../YandexMap/YandexMap';
 import { Cdek } from '../Cdek/Cdek';
-import { Context } from '../../../../pages/_app';
+import { useOrderStore } from '../../store/OrderStore';
 
 
 type Props = {
@@ -15,7 +15,9 @@ type Props = {
 };
 
 export const AddressForm = ({ setFormValid }: Props): JSX.Element => {
-	const { order } = useContext(Context);
+	const shippingType = useOrderStore(state => state.shippingType);
+	const setClientInfo = useOrderStore(state => state.setClientInfo);
+
 	const [lastName, setLastName] = useState('');
 	const [firstName, setFirstName] = useState('');
 	const [fatherName, setFatherName] = useState('');
@@ -51,19 +53,20 @@ export const AddressForm = ({ setFormValid }: Props): JSX.Element => {
 		}
 	};
 
+	// form validation
 	useEffect(() => {
-		if (lastName && firstName && email && phone &&
-			selectedBranch || order.shippingType === 'pickup' || order.shippingType === 'yandex' &&
+		if (lastName && firstName && fatherName && email && phone &&
+			selectedBranch || shippingType === 'pickup' || shippingType === 'yandex' &&
 			emailError === '' && contact) {
 			setFormValid(true);
 		} else {
 			setFormValid(false);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [lastName, firstName, email, phone, selectedBranch, contact, order.shippingType]);
+	}, [lastName, firstName, fatherName, email, phone, selectedBranch, contact, shippingType]);
 
 	const updateAddressData = () => {
-		order.setClientInfo({
+		setClientInfo({
 			lastName: lastName,
 			firstName: firstName,
 			fatherName: fatherName,

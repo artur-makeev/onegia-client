@@ -1,52 +1,56 @@
 import styles from './OrderFilling.module.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { AddressForm } from '../AddressForm/AddressForm';
 import Button from '@mui/material/Button';
-import { useContext } from 'react';
 import { orderConfirm } from '../../api/orderApi';
-import { toJS } from 'mobx';
-import { Context } from '../../../../pages/_app';
 import { useRouter } from 'next/router';
 import Paper from '@mui/material/Paper';
-import { observer } from 'mobx-react-lite';
 import Link from 'next/link';
 import { OFFER_ROUTE } from '../../../../utilities/consts';
 import { OrderProducts } from '../OrderProducts/OrderProducts';
 import { daySpelling } from '../../helpers/daySpelling';
+import { useBasketStore } from '../../../Basket/store/BasketStore';
+import { useBasketProductsQuantity, useBasketTotalPrice } from '../../../Basket/store/BasketComputedValues';
+import { NoProductsToOrder } from '../noProducts/NoProducts';
+import { useOrderStore } from '../../store/OrderStore';
 
 
-export const OrderFilling = observer((): JSX.Element => {
-	const { basket, order } = useContext(Context);
+export const OrderFilling = (): JSX.Element => {
 	const [formValid, setFormValid] = useState(false);
 	const router = useRouter();
 
-	useEffect(() => {
-		if (basket.loaded) {
-			if (basket.products.length === 0 && order.products.length === 0) {
-				router.push('/shop');
-			}
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [basket.products, order.products]);
+	const basketProducts = useBasketStore(state => state.products);
+	const basketLoaded = useBasketStore(state => state.loaded);
+	const basketSetProducts = useBasketStore(state => state.setProducts);
+	const [basketTotalPrice] = useBasketTotalPrice();
+	const [basketProductsQuantity] = useBasketProductsQuantity();
+
+	const orderProducts = useOrderStore(state => state.products);
+	const clientInfo = useOrderStore(state => state.clientInfo);
+	const shippingType = useOrderStore(state => state.shippingType);
+	const deliveryTime = useOrderStore(state => state.deliveryTime);
+	const deliveryPrice = useOrderStore(state => state.deliveryPrice);
+	const setId = useOrderStore(state => state.setId);
+	const setProducts = useOrderStore(state => state.setProducts);
 
 	const createOrder = async () => {
 		const formData = new FormData();
-		formData.append('lastName', order.clientInfo.lastName);
-		formData.append('firstName', order.clientInfo.firstName);
-		formData.append('fatherName', order.clientInfo.fatherName);
-		formData.append('email', order.clientInfo.email);
-		formData.append('phone', order.clientInfo.phone);
-		formData.append('address', order.shippingType === 'cdek' ? order.clientInfo.address : 'Петрозаводск');
-		formData.append('contact', order.clientInfo.contact);
-		formData.append('shippingType', order.shippingType);
-		formData.append('shippingTime', order.deliveryTime.toString());
-		formData.append('shippingPrice', order.shippingType === 'pickup' || order.shippingType === 'yandex'
-			? '0' : order.deliveryPrice.toString());
-		formData.append('productsPrice', JSON.stringify(basket.totalPrice));
-		formData.append('basketProducts', JSON.stringify(toJS(basket.products)));
-		order.setId(await orderConfirm(formData));
-		order.setProducts(basket.products);
-		basket.setProducts([]);
+		formData.append('lastName', clientInfo.lastName);
+		formData.append('firstName', clientInfo.firstName);
+		formData.append('fatherName', clientInfo.fatherName);
+		formData.append('email', clientInfo.email);
+		formData.append('phone', clientInfo.phone);
+		formData.append('address', shippingType === 'cdek' ? clientInfo.address : 'Петрозаводск');
+		formData.append('contact', clientInfo.contact);
+		formData.append('shippingType', shippingType);
+		formData.append('shippingTime', deliveryTime.toString());
+		formData.append('shippingPrice', shippingType === 'pickup' || shippingType === 'yandex'
+			? '0' : deliveryPrice.toString());
+		formData.append('productsPrice', JSON.stringify(basketTotalPrice));
+		formData.append('basketProducts', JSON.stringify(basketProducts));
+		setId(await orderConfirm(formData));
+		setProducts(basketProducts);
+		basketSetProducts([]);
 		localStorage.removeItem('products');
 		router.push('/order-confirmed');
 	};
@@ -54,74 +58,78 @@ export const OrderFilling = observer((): JSX.Element => {
 	return (
 		<div className={styles.container}>
 			<h1>Оформление заказа</h1>
-			<div className={styles.orderContainer}>
-				<div className={styles.addressContainer}>
-					<div className={styles.orderForm}>
-						<AddressForm
-							setFormValid={setFormValid} />
-						<Link href={OFFER_ROUTE} className={styles.offer}>Публичная оферта</Link>
-						<Button
-							disabled={!formValid}
-							onClick={createOrder}
-							variant='contained'
-							className={styles.orderButton}
-						>
-							{formValid ? 'Подтвердить заказ' : 'Заполните данные'}
-						</Button>
+			{basketProducts.length > 0 || orderProducts.length > 0 && basketLoaded ?
+				<div className={styles.orderContainer}>
+					<div className={styles.addressContainer}>
+						<div className={styles.orderForm}>
+							<AddressForm
+								setFormValid={setFormValid} />
+							<Link href={OFFER_ROUTE} className={styles.offer}>Публичная оферта</Link>
+							<Button
+								disabled={!formValid}
+								onClick={createOrder}
+								variant='contained'
+								className={styles.orderButton}
+							>
+								{formValid ? 'Подтвердить заказ' : 'Заполните данные'}
+							</Button>
+						</div>
 					</div>
-				</div>
-				<div className={styles.orderConfirm}>
-					<div className={styles.orderResume}>
-						<Paper square className={styles.orderTotal}>
-							<h3>Ваш заказ</h3>
-							<div className={styles.row}>
-								<div>Товары ({basket.productsQuantity} шт.)</div>
-								<div>{basket.totalPrice} ₽</div>
-							</div>
-							{order.shippingType === 'cdek' && order.deliveryPrice !== 0 &&
-								<div>
-									{order.shippingType === 'cdek' &&
-										<div className={styles.row}>
-											<div>Доставка (СДЭК)</div>
-											<div>{order.deliveryPrice} ₽</div>
-										</div>
-									}
-									<div className={styles.row}>
-										<h4>Итого</h4>
-										<h4>{basket.totalPrice + order.deliveryPrice} ₽</h4>
-									</div>
+					<div className={styles.orderConfirm}>
+						<div className={styles.orderResume}>
+							<Paper square className={styles.orderTotal}>
+								<h3>Ваш заказ</h3>
+								<div className={styles.row}>
+									<div>Товары ({basketProductsQuantity} шт.)</div>
+									<div>{basketTotalPrice} ₽</div>
 								</div>
-							}
-							{order.shippingType === 'pickup' &&
-								<div>
-									<div className={styles.row}>
-										<div>Самовывоз</div>
-										<div>0 ₽</div>
-									</div>
-									<div className={styles.row}>
-										<h4>Итого</h4>
-										<h4>{basket.totalPrice} ₽</h4>
-									</div>
+								{shippingType === 'cdek' && deliveryPrice !== 0 &&
 									<div>
-										<p>Самовывоз осуществляется из магазина</p>
-										<p>"Твоя полка" в тц "Пирамида"</p>
-										<p>По адресу: ул. Кирова д. 19а</p>
-										<p>Ежедневно с 10:00 до 20:00</p>
+										{shippingType === 'cdek' &&
+											<div className={styles.row}>
+												<div>Доставка (СДЭК)</div>
+												<div>{deliveryPrice} ₽</div>
+											</div>
+										}
+										<div className={styles.row}>
+											<h4>Итого</h4>
+											<h4>{basketTotalPrice + deliveryPrice} ₽</h4>
+										</div>
 									</div>
-								</div>
-							}
-							{order.shippingType === 'yandex' &&
-								<p>доставка оплачивается отдельно</p>
-							}
-							<p>Производство займет 3 дня</p>
-							{order.shippingType === 'cdek' && order.deliveryPrice !== 0 &&
-								<p>Доставка займет {order.deliveryTime} {daySpelling(order.deliveryTime)}</p>
-							}
-						</Paper>
-						<OrderProducts products={basket.products} />
+								}
+								{shippingType === 'pickup' &&
+									<div>
+										<div className={styles.row}>
+											<div>Самовывоз</div>
+											<div>0 ₽</div>
+										</div>
+										<div className={styles.row}>
+											<h4>Итого</h4>
+											<h4>{basketTotalPrice} ₽</h4>
+										</div>
+										<div>
+											<p>Самовывоз осуществляется из магазина</p>
+											<p>"Твоя полка" в тц "Пирамида"</p>
+											<p>По адресу: ул. Кирова д. 19а</p>
+											<p>Ежедневно с 10:00 до 20:00</p>
+										</div>
+									</div>
+								}
+								{shippingType === 'yandex' &&
+									<p>доставка оплачивается отдельно</p>
+								}
+								<p>Производство займет 3 дня</p>
+								{shippingType === 'cdek' && deliveryPrice !== 0 &&
+									<p>Доставка займет {deliveryTime} {daySpelling(deliveryTime)}</p>
+								}
+							</Paper>
+							<OrderProducts products={basketProducts} />
+						</div>
 					</div>
 				</div>
-			</div>
+				:
+				<NoProductsToOrder />
+			}
 		</div>
 	);
-});
+};

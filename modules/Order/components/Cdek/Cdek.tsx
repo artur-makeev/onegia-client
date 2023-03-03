@@ -1,13 +1,13 @@
 import styles from './Cdek.module.css';
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useState } from 'react';
 import { CityOption, RegionOption, Region, City, AddressOption, Branch, Coords, ShippingType } from '../../../../models/Models';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { calculateDelivery } from '../../api/cdekApi';
-import { Context } from '../../../../pages/_app';
 import MenuItem from '@mui/material/MenuItem';
-import { observer } from 'mobx-react-lite';
+import { useProductsIdsWithCount } from '../../../Basket/store/BasketComputedValues';
+import { useOrderStore } from '../../store/OrderStore';
 
 type Props = {
 	setCdekApiError: React.Dispatch<React.SetStateAction<boolean>>
@@ -18,8 +18,17 @@ type Props = {
 	setSelectedBranch: React.Dispatch<React.SetStateAction<string | null>>
 };
 
-export const Cdek = observer(({ setCdekApiError, setCityCenter, setShowMap, addresses, selectedBranch, setSelectedBranch }: Props): JSX.Element => {
-	const { order, basket } = useContext(Context);
+export const Cdek = ({ setCdekApiError, setCityCenter, setShowMap, addresses, selectedBranch, setSelectedBranch }: Props): JSX.Element => {
+
+	// Order store
+	const shippingType = useOrderStore(state => state.shippingType);
+	const setShippingType = useOrderStore(state => state.setShippingType);
+	const setDeliveryTime = useOrderStore(state => state.setDeliveryTime);
+	const setDeliveryPrice = useOrderStore(state => state.setDeliveryPrice);
+
+	// Basket store
+	const [productsIdsWithCount] = useProductsIdsWithCount();
+
 	const regions = useRef<Region[]>([]);
 	const [regionOptions, setRegionOptions] = useState<RegionOption[]>([]);
 	const [selectedRegion, setSelectedRegion] = useState<RegionOption | null>(null);
@@ -132,10 +141,10 @@ export const Cdek = observer(({ setCdekApiError, setCityCenter, setShowMap, addr
 
 	useEffect(() => {
 		if (selectedBranch) {
-			calculateDelivery({ to_address: selectedBranch, packageProducts: basket.productsIdsWithCount })
+			calculateDelivery({ to_address: selectedBranch, packageProducts: productsIdsWithCount })
 				.then(res => {
-					order.setDeliveryPrice(Math.floor(res.total_sum));
-					order.setDeliveryTime(res.period_max);
+					setDeliveryPrice(Math.floor(res.total_sum));
+					setDeliveryTime(res.period_max);
 				});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -146,8 +155,8 @@ export const Cdek = observer(({ setCdekApiError, setCityCenter, setShowMap, addr
 			setSelectedBranch(null);
 			setBranchesLoaded(false);
 			setLocalDelivery(false);
-			order.setShippingType('');
-			order.setDeliveryPrice(0);
+			setShippingType('');
+			setDeliveryPrice(0);
 		}
 
 		if (!selectedRegion) {
@@ -155,19 +164,19 @@ export const Cdek = observer(({ setCdekApiError, setCityCenter, setShowMap, addr
 			setSelectedCity(null);
 			setBranchesLoaded(false);
 			setLocalDelivery(false);
-			order.setShippingType('');
-			order.setDeliveryPrice(0);
+			setShippingType('');
+			setDeliveryPrice(0);
 		}
 
 		if (!selectedBranch) {
-			order.setDeliveryPrice(0);
+			setDeliveryPrice(0);
 		}
 
 		if (!selectedBranch && !localDelivery) {
-			order.setShippingType('');
+			setShippingType('');
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [selectedRegion, selectedCity, selectedBranch, setSelectedBranch, order.shippingType]);
+	}, [selectedRegion, selectedCity, selectedBranch, setSelectedBranch, shippingType]);
 
 	useEffect(() => {
 		if (localDelivery) {
@@ -178,10 +187,10 @@ export const Cdek = observer(({ setCdekApiError, setCityCenter, setShowMap, addr
 			}
 		}
 
-		if (order.shippingType === 'pickup') {
+		if (shippingType === 'pickup') {
 			setShowMap(false);
 		}
-	}, [selectedCity, selectedBranch, addressesOptions, setShowMap, branchesLoaded, localDelivery, order.shippingType]);
+	}, [selectedCity, selectedBranch, addressesOptions, setShowMap, branchesLoaded, localDelivery, shippingType]);
 
 	return (
 		<>
@@ -213,8 +222,8 @@ export const Cdek = observer(({ setCdekApiError, setCityCenter, setShowMap, addr
 					required
 					label='Как вы хотите получить заказ?'
 					variant='outlined'
-					value={order.shippingType}
-					onChange={(e) => order.setShippingType(e.target.value as ShippingType)}
+					value={shippingType}
+					onChange={(e) => setShippingType(e.target.value as ShippingType)}
 					select
 				>
 					<MenuItem className={styles.shippingItem} value={'pickup'}>Самовывоз</MenuItem>
@@ -231,7 +240,7 @@ export const Cdek = observer(({ setCdekApiError, setCityCenter, setShowMap, addr
 					value={selectedBranch}
 					onChange={(event: React.FormEvent, newValue: AddressOption | null) => {
 						setSelectedBranch(newValue);
-						order.setShippingType('cdek');
+						setShippingType('cdek');
 					}}
 					disablePortal
 					id="address"
@@ -243,5 +252,5 @@ export const Cdek = observer(({ setCdekApiError, setCityCenter, setShowMap, addr
 			}
 		</>
 	);
-});
+};
 

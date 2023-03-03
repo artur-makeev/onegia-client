@@ -1,103 +1,59 @@
-import { makeAutoObservable } from 'mobx';
-import { ClientInfo, BasketProduct, ShippingType } from '../../../models/Models';
+import { create } from 'zustand';
+import { devtools, persist } from 'zustand/middleware';
+import { BasketProduct, ClientInfo, ShippingType } from '../../../models/Models';
 
-export class OrderStore {
-	_id: number;
-	_confirmed: boolean;
-	_products: BasketProduct[];
-	_clientInfo: ClientInfo;
-	_deliveryPrice: number;
-	_deliveryTime: number;
-	_shippingType: ShippingType;
-	constructor() {
-		this._id = 0;
-		this._confirmed = false;
-		this._products = [];
-		this._clientInfo = {
-			lastName: '',
-			firstName: '',
-			fatherName: '',
-			email: '',
-			phone: '',
-			address: '',
-			contact: ''
-		};
-		this._deliveryPrice = 0;
-		this._deliveryTime = 0;
-		this._shippingType = '';
-		makeAutoObservable(this);
-	}
-
-	setId(id: number) {
-		this._id = id;
-	}
-
-	setConfirmed(confirmed: boolean) {
-		this._confirmed = confirmed;
-	}
-
-	setProducts(products: BasketProduct[]) {
-		this._products = products;
-	}
-
-	setClientInfo(clientInfo: ClientInfo) {
-		this._clientInfo = clientInfo;
-	}
-
-	setDeliveryPrice(deliveryPrice: number) {
-		this._deliveryPrice = deliveryPrice;
-	}
-
-	setDeliveryTime(deliveryTime: number) {
-		this._deliveryTime = deliveryTime;
-	}
-
-	setShippingType(shippingType: ShippingType) {
-		this._shippingType = shippingType;
-	}
-
-	get id() {
-		return this._id;
-	}
-
-	get confirmed() {
-		return this._confirmed;
-	}
-
-	get products() {
-		return this._products;
-	}
-
-	get clientInfo() {
-		return this._clientInfo;
-	}
-
-	get deliveryPrice() {
-		return this._deliveryPrice;
-	}
-
-	get deliveryTime() {
-		return this._deliveryTime;
-	}
-
-	get shippingType() {
-		return this._shippingType;
-	}
-
-	get productsQuantity() {
-		let count = 0;
-		this.products.forEach((product: BasketProduct) => {
-			count += product.count;
-		});
-		return count;
-	}
-
-	get productsPrice() {
-		let priceCounter = 0;
-		this.products.forEach((product: BasketProduct) => {
-			priceCounter += (product.price * product.count);
-		});
-		return priceCounter;
-	}
-
+interface OrderState {
+	id: number,
+	confirmed: boolean,
+	products: BasketProduct[],
+	clientInfo: ClientInfo,
+	deliveryPrice: number,
+	deliveryTime: number,
+	shippingType: ShippingType,
+	setId: (pk: number) => void,
+	setProducts: (products: BasketProduct[]) => void,
+	setClientInfo: (clientInfo: ClientInfo) => void,
+	setDeliveryPrice: (price: number) => void,
+	setDeliveryTime: (time: number) => void,
+	setShippingType: (type: ShippingType) => void
 }
+
+export const useOrderStore = create<OrderState>()(
+	devtools(
+		persist(
+			(set) => ({
+				id: 0,
+				confirmed: false,
+				products: [],
+				clientInfo: {
+					lastName: '',
+					firstName: '',
+					fatherName: '',
+					email: '',
+					phone: '',
+					address: '',
+					contact: ''
+				},
+				deliveryPrice: 0,
+				deliveryTime: 0,
+				shippingType: '',
+
+				setId: (pk) => set(() => ({ id: pk })),
+
+				setProducts: (products) => set(() => ({ products: products })),
+
+				setClientInfo: (clientInfo) => set(() => ({ clientInfo: clientInfo })),
+
+				setDeliveryPrice: (price) => set(() => ({ deliveryPrice: price })),
+
+				setDeliveryTime: (time) => set(() => ({ deliveryTime: time })),
+
+				setShippingType: (type) => set(() => ({ shippingType: type }))
+
+			}),
+			{
+				name: 'basket-storage',
+			}
+		)
+	)
+);

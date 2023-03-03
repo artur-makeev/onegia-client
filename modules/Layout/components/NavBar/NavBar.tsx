@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -9,16 +9,19 @@ import { BASKET_ROUTE, CONTACTS_ROUTE, SHOP_ROUTE, VK_LINK } from '../../../../u
 import styles from './NavBar.module.css';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Badge from '@mui/material/Badge';
-import { Context } from '../../../../pages/_app';
-import { observer } from 'mobx-react-lite';
 import { Vkontakte } from '../../../../UI';
+import { useBasketProductsQuantity } from '../../../Basket/store/BasketComputedValues';
+import { useHasHydrated } from '../../hooks/useHasHydrated';
+import { useSliderStore } from '../../../Slider/store/SlideStore';
 
-export const NavBar = observer(() => {
-	const { basket, slide } = useContext(Context);
+export const NavBar = () => {
+	const hasHydrated = useHasHydrated();
+	const setSlideIndex = useSliderStore(state => state.setSlideIndex);
+	const [productsQuantity] = useBasketProductsQuantity();
 
 	const handleTab = (e: React.KeyboardEvent) => {
 		if (e.key === 'Tab') {
-			slide.setSlideIndex(0);
+			setSlideIndex(0);
 		}
 	};
 
@@ -48,7 +51,7 @@ export const NavBar = observer(() => {
 						<Link href={BASKET_ROUTE}>
 							<Button className={styles.navLink} aria-label='корзина' onKeyDown={(e) => handleTab(e)}>
 								<Badge
-									badgeContent={basket.productsQuantity}
+									badgeContent={hasHydrated && productsQuantity}
 									color='secondary'
 								>
 									<ShoppingCartIcon />
@@ -60,4 +63,4 @@ export const NavBar = observer(() => {
 			</AppBar>
 		</Box >
 	);
-});
+};

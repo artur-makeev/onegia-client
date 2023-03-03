@@ -1,7 +1,7 @@
 import { Map, Placemark } from '@pbe/react-yandex-maps';
-import { useContext } from 'react';
 import { AddressOption, Branch } from '../../../../models/Models';
-import { Context } from '../../../../pages/_app';
+import { useOrderStore } from '../../store/OrderStore';
+import { YMaps } from '@pbe/react-yandex-maps';
 
 type Props = {
 	ceterLatityde: number,
@@ -11,24 +11,28 @@ type Props = {
 };
 
 export const YandexMap = ({ ceterLatityde, centerLongitude, addresses, setSelectedBranch }: Props): JSX.Element => {
-	const { order } = useContext(Context);
+	// Order store
+	const setShippingType = useOrderStore(state => state.setShippingType);
+
 	return (
-		<Map
-			state={{ center: [ceterLatityde, centerLongitude], zoom: 11, controls: ["zoomControl"] }}
-			modules={["control.ZoomControl"]}
-			width={334}
-		>
-			{addresses.map((branch: Branch) => {
-				return (
-					<Placemark
-						key={branch.code}
-						defaultGeometry={[branch.latitude, branch.longitude]}
-						onClick={() => {
-							setSelectedBranch(branch.address);
-							order.setShippingType('cdek');
-						}}
-					/>);
-			})}
-		</Map>
+		<YMaps>
+			<Map
+				state={{ center: [ceterLatityde, centerLongitude], zoom: 11, controls: ["zoomControl"] }}
+				modules={["control.ZoomControl"]}
+				width={334}
+			>
+				{addresses.map((branch: Branch) => {
+					return (
+						<Placemark
+							key={branch.code}
+							defaultGeometry={[branch.latitude, branch.longitude]}
+							onClick={() => {
+								setSelectedBranch(branch.address);
+								setShippingType('cdek');
+							}}
+						/>);
+				})}
+			</Map>
+		</YMaps>
 	);
 };

@@ -1,22 +1,22 @@
-import { useContext, useRef, } from 'react';
+import { useRef } from 'react';
 import styles from './Slider.module.css';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
 import { slidesData } from '../..';
-import { observer } from 'mobx-react-lite';
 import { Slide } from '../../../../models/Models';
-import { Context } from '../../../../pages/_app';
 import Image from 'next/image';
 import Button from '@mui/material/Button';
 import Link from 'next/link';
+import { useSliderStore } from '../../store/SlideStore';
 
 
-export const Slider = observer(() => {
-	const { slide } = useContext(Context);
+export const Slider = () => {
+	const slideIndex = useSliderStore(state => state.slideIndex);
+	const setSlideIndex = useSliderStore(state => state.setSlideIndex);
 	const itemsRef = useRef<HTMLButtonElement[]>([]);
 
-	const switchToRightSlide = () => slide.setSlideIndex(slide.slideIndex < (slidesData.length - 1) ? slide.slideIndex + 1 : 0);
-	const switchToLeftSlide = () => slide.setSlideIndex(slide.slideIndex > 0 ? slide.slideIndex - 1 : slidesData.length - 1);
+	const switchToRightSlide = () => setSlideIndex(slideIndex < (slidesData.length - 1) ? slideIndex + 1 : 0);
+	const switchToLeftSlide = () => setSlideIndex(slideIndex > 0 ? slideIndex - 1 : slidesData.length - 1);
 
 	const handleClick = (direction: string) => {
 		if (direction === 'left') {
@@ -30,12 +30,12 @@ export const Slider = observer(() => {
 		if (e.key === "Tab") {
 			if (!(index === array.length - 1)) {
 				e.preventDefault();
-				slide.setSlideIndex(slide.slideIndex + 1);
+				setSlideIndex(slideIndex + 1);
 				setTimeout(() => {
 					itemsRef.current[index + 1].focus();
 				}, 500);
 			} else {
-				slide.setSlideIndex(0);
+				setSlideIndex(0);
 			}
 		}
 	};
@@ -43,8 +43,8 @@ export const Slider = observer(() => {
 	return (
 		<div className={styles.container}>
 			<div
-				className={`${styles.wrapper} ${slide.slideIndex === 0 ? styles.switchSlide1 :
-					slide.slideIndex === 1 ? styles.switchSlide2 : styles.switchSlide3}`}
+				className={`${styles.wrapper} ${slideIndex === 0 ? styles.switchSlide1 :
+					slideIndex === 1 ? styles.switchSlide2 : styles.switchSlide3}`}
 			>
 				{slidesData.map((slide: Slide, index: number, array: Slide[]) => {
 					return (
@@ -97,5 +97,5 @@ export const Slider = observer(() => {
 			</div>
 		</div>
 	);
-});
+};
 

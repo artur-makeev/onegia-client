@@ -1,4 +1,3 @@
-import { observer } from 'mobx-react-lite';
 import styles from '../styles/shop.module.css';
 import { ProductList } from '../modules/ShopFront';
 import { Product } from '../models/Models';
@@ -7,13 +6,13 @@ type Props = {
 	products: Product[]
 };
 
-const ShopPage = observer(({ products }: Props): JSX.Element => {
+const ShopPage = ({ products }: Props): JSX.Element => {
 	return (
 		<div className={styles.container}>
 			<ProductList products={products} />
 		</div>
 	);
-});
+};
 
 export default ShopPage;
 

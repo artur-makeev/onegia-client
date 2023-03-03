@@ -1,4 +1,3 @@
-import { observer } from 'mobx-react-lite';
 import ProductItem from '../ProductItem/ProductItemMain/ProductItem';
 import styles from './ProductList.module.css';
 import { Product } from '../../../../models/Models';
@@ -7,7 +6,7 @@ type Props = {
 	products: Product[]
 };
 
-export const ProductList = observer(({ products }: Props) => {
+export const ProductList = ({ products }: Props) => {
 	return (
 		<ul aria-label='products' className={styles.container}>
 			{products.map((product: Product): JSX.Element =>
@@ -15,4 +14,4 @@ export const ProductList = observer(({ products }: Props) => {
 			)}
 		</ul>
 	);
-});
+};

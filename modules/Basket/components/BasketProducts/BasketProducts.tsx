@@ -6,7 +6,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Image from 'next/image';
-import { observer } from 'mobx-react-lite';
 import { ProductQuantity } from '../ProductQuantity/ProductQuantity';
 import { BasketProduct } from '../../../../models/Models';
 
@@ -23,7 +22,7 @@ type Props = {
 	products: BasketProduct[]
 };
 
-export const BasketProducts = observer(({ products }: Props): JSX.Element => {
+export const BasketProducts = ({ products }: Props): JSX.Element => {
 
 	const myLoader = ({ src, width, quality }: { src: string, width: number, quality?: number }): string => {
 		return `${src}?w=${width}&q=${quality || 100}`;
@@ -88,4 +87,4 @@ export const BasketProducts = observer(({ products }: Props): JSX.Element => {
 			</Table>
 		</TableContainer>
 	);
-});
+};

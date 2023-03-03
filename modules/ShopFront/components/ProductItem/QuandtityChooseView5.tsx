@@ -4,11 +4,10 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useRef, useState } from 'react';
-import { useContext } from 'react';
 import { Product, Aroma } from '../../../../models/Models';
-import { Context } from '../../../../pages/_app';
 import { Button } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { useBasketStore } from '../../../Basket/store/BasketStore';
 
 type Props = {
 	product: Product,
@@ -18,12 +17,12 @@ type Props = {
 };
 
 export const QuantityChooseView5 = ({ product, selectedAroma, toView1, toPreviousView }: Props): JSX.Element => {
+	const addProduct = useBasketStore(state => state.addProduct);
 	const [quantity, setQuantity] = useState(1);
 	const quantityValue = useRef(1);
-	const { basket } = useContext(Context);
 
 	const addToBasket = async () => {
-		basket.addProduct(
+		addProduct(
 			product.id,
 			product.name,
 			product.price,

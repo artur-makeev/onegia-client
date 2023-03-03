@@ -1,9 +1,9 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import styles from './ProductQuantity.module.css';
-import { observer } from 'mobx-react-lite';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { Context } from '../../../../pages/_app';
+import { useBasketStore } from '../../store/BasketStore';
+
 
 type Props = {
 	productId: number;
@@ -11,12 +11,13 @@ type Props = {
 	aromaId: number;
 };
 
-export const ProductQuantity = observer(({ productId, count, aromaId }: Props): JSX.Element => {
-	const { basket } = useContext(Context);
+export const ProductQuantity = ({ productId, count, aromaId }: Props): JSX.Element => {
+	const addProduct = useBasketStore(state => state.addProduct);
+	const deleteProduct = useBasketStore(state => state.deleteProduct);
 	const [counter, setCounter] = useState(count);
 
 	const oneMore = (id: number) => {
-		basket.addProduct(id, '', 0, '', aromaId, '', 1, 0);
+		addProduct(id, '', 0, '', aromaId, '', 1, 0);
 		setCounter(counter + 1);
 	};
 
@@ -24,7 +25,7 @@ export const ProductQuantity = observer(({ productId, count, aromaId }: Props): 
 		if (counter < 1) {
 			return;
 		}
-		basket.deleteProduct(id, aromaId);
+		deleteProduct(id, aromaId);
 		setCounter(counter - 1);
 	};
 
@@ -41,5 +42,5 @@ export const ProductQuantity = observer(({ productId, count, aromaId }: Props): 
 			/>
 		</>
 	);
-});
+};
 

@@ -1,5 +1,5 @@
 import styles from './BottomBar.module.css';
-import React, { useContext } from 'react';
+import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Link from 'next/link';
@@ -7,22 +7,26 @@ import { BASKET_ROUTE, SHOP_ROUTE, VK_LINK, CONTACTS_ROUTE } from '../../../../u
 import { Vkontakte } from '../../../../UI/Vkontakte/Vkontakte';
 import Badge from '@mui/material/Badge';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Context } from '../../../../pages/_app';
 import StoreIcon from '@mui/icons-material/Store';
-import { observer } from 'mobx-react-lite';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { useBasketProductsQuantity } from '../../../Basket/store/BasketComputedValues';
+import { useHasHydrated } from '../../hooks/useHasHydrated';
 
-export const BottomBar = observer(() => {
-	const { basket } = useContext(Context);
+export const BottomBar = () => {
+	const hasHydrated = useHasHydrated();
+
+	const [productsQuantity] = useBasketProductsQuantity();
 
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
+
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
+
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
@@ -96,7 +100,7 @@ export const BottomBar = observer(() => {
 				<Link href={BASKET_ROUTE}>
 					<IconButton className={styles.navLink} aria-label='Корзина'>
 						<Badge
-							badgeContent={basket.productsQuantity}
+							badgeContent={hasHydrated && productsQuantity}
 							color='secondary'
 						>
 							<ShoppingCartIcon />
@@ -106,4 +110,4 @@ export const BottomBar = observer(() => {
 			</Toolbar>
 		</AppBar>
 	);
-});
+};

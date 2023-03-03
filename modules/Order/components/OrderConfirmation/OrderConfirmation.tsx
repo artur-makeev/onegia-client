@@ -1,17 +1,23 @@
 import styles from './OrderConfirmation.module.css';
 import Paper from '@mui/material/Paper';
-import { Context } from '../../../../pages/_app';
-import { useRouter } from 'next/router';
-import { useContext, useEffect } from 'react';
 import { PaymentParams } from '../../../../models/Models';
 import { Button } from '@mui/material';
 import { generatePayment, PayRequest, ReceiptItem } from '../../api/robokassaApi';
 import { OrderProducts } from '../OrderProducts/OrderProducts';
+import { useOrderStore } from '../../store/OrderStore';
+import { NoProductsToOrder } from '../noProducts/NoProducts';
+import { useGetProductsPrice, useGetProductsQuantity } from '../../store/OrderComputedValues';
 
 export const OrderConfirmation = () => {
-	const { order } = useContext(Context);
-	const router = useRouter();
-	console.log(order.deliveryPrice);
+	// Order store
+	const orderProducts = useOrderStore(state => state.products);
+	const clientInfo = useOrderStore(state => state.clientInfo);
+	const shippingType = useOrderStore(state => state.shippingType);
+	const products = useOrderStore(state => state.products);
+	const deliveryPrice = useOrderStore(state => state.deliveryPrice);
+	const orderId = useOrderStore(state => state.id);
+	const [productsPrice] = useGetProductsPrice();
+	const [productsQuantity] = useGetProductsQuantity();
 
 	function post(path: string, params: PaymentParams) {
 		const form = document.createElement('form');
@@ -33,7 +39,7 @@ export const OrderConfirmation = () => {
 	}
 
 	const makePayment = () => {
-		const receiptItems: ReceiptItem[] = order.products.map(product => {
+		const receiptItems: ReceiptItem[] = products.map(product => {
 			return {
 				name: `${product.name} ${product.aromaName}`,
 				quantity: JSON.stringify(product.count),
@@ -44,11 +50,11 @@ export const OrderConfirmation = () => {
 			};
 		});
 
-		if (order.shippingType === 'cdek') {
+		if (shippingType === 'cdek') {
 			receiptItems.push({
 				name: 'доставка',
 				quantity: '1',
-				sum: order.deliveryPrice.toString(),
+				sum: deliveryPrice.toString(),
 				payment_method: 'full_payment',
 				payment_object: 'service',
 				tax: 'none'
@@ -56,8 +62,8 @@ export const OrderConfirmation = () => {
 		}
 
 		const request: PayRequest = {
-			outSum: (order.productsPrice + order.deliveryPrice).toString(),
-			invId: order.id.toString(),
+			outSum: (productsPrice + deliveryPrice).toString(),
+			invId: orderId.toString(),
 			items: receiptItems,
 		};
 		generatePayment(request).then(res => {
@@ -65,72 +71,70 @@ export const OrderConfirmation = () => {
 		});
 	};
 
-	useEffect(() => {
-		if (order.products.length === 0) {
-			router.push('/shop');
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [order.products]);
-
 	return (
 		<div className={styles.container}>
-			<h1>{`Заказ №${order.id} оформлен`}</h1>
-			<Paper square className={styles.orderSummary}>
-				<div className={styles.buttonContainer}>
-					<Button
-						onClick={makePayment}
-						variant='contained'
-						className={styles.button}
-					>
-						Оплатить
-					</Button>
-				</div>
-				<p>Получатель: {`${order.clientInfo.lastName} ${order.clientInfo.firstName} ${order.clientInfo.fatherName}`}</p>
-				<p>Информация по заказу отправлена на почту: {order.clientInfo.email}</p>
-				<p>Ваш телефон: {order.clientInfo.phone}</p>
-				{order.shippingType === 'cdek' &&
-					<p>Адрес пункта СДЭК: {order.clientInfo.address}</p>
-				}
-				<div className={styles.row}>
-					<div>Товары ({order.productsQuantity} шт.)</div>
-					<div>{order.productsPrice} ₽</div>
-				</div>
-				<div>
-					<div className={styles.row}>
-						{order.shippingType === 'cdek' &&
-							<div>Доставка (СДЭК)</div>
-						}
-						{order.shippingType === 'yandex' &&
-							<div>Яндекс доставка оплачивается отдельно</div>
-						}
-						{order.shippingType === 'pickup' &&
-							<div>Самовывоз</div>
-						}
-						{order.shippingType === 'cdek' &&
-							<div>{order.deliveryPrice} ₽</div>
-						}
-						{order.shippingType === 'pickup' &&
-							<div>{order.deliveryPrice} ₽</div>
-						}
-					</div>
-					{order.shippingType !== 'yandex' &&
-						<div className={styles.row}>
-							<div>Итого</div>
-							<div>{order.productsPrice + order.deliveryPrice} ₽</div>
+			{orderProducts.length > 0 ?
+				<>
+					<h1>{`Заказ №${orderId} оформлен`}</h1>
+					<Paper square className={styles.orderSummary}>
+						<div className={styles.buttonContainer}>
+							<Button
+								onClick={makePayment}
+								variant='contained'
+								className={styles.button}
+							>
+								Оплатить
+							</Button>
 						</div>
-					}
-					{order.shippingType === 'pickup' &&
-						<p>Самовывоз осуществляется из магазина "Твоя полка" в тц "Пирамида" по адресу: ул.Кирова д.19а (ежедневно с 10:00 до 20:00)</p>
-					}
-				</div>
-				<p>При наличии вопросов обращайтесь по электронной почте:</p>
-				<a href={`mailto:${process.env.NEXT_PUBLIC_SHOP_EMAIL}`}>{process.env.NEXT_PUBLIC_SHOP_EMAIL}</a>
-			</Paper>
-			<h4>Товары в заказе</h4>
-			<div className={styles.productsContainer}>
-				<OrderProducts products={order.products} />
-			</div>
-
+						<p>Получатель: {`${clientInfo.lastName} ${clientInfo.firstName} ${clientInfo.fatherName}`}</p>
+						<p>Информация по заказу отправлена на почту: {clientInfo.email}</p>
+						<p>Ваш телефон: {clientInfo.phone}</p>
+						{shippingType === 'cdek' &&
+							<p>Адрес пункта СДЭК: {clientInfo.address}</p>
+						}
+						<div className={styles.row}>
+							<div>Товары ({productsQuantity} шт.)</div>
+							<div>{productsPrice} ₽</div>
+						</div>
+						<div>
+							<div className={styles.row}>
+								{shippingType === 'cdek' &&
+									<div>Доставка (СДЭК)</div>
+								}
+								{shippingType === 'yandex' &&
+									<div>Яндекс доставка оплачивается отдельно</div>
+								}
+								{shippingType === 'pickup' &&
+									<div>Самовывоз</div>
+								}
+								{shippingType === 'cdek' &&
+									<div>{deliveryPrice} ₽</div>
+								}
+								{shippingType === 'pickup' &&
+									<div>{deliveryPrice} ₽</div>
+								}
+							</div>
+							{shippingType !== 'yandex' &&
+								<div className={styles.row}>
+									<div>Итого</div>
+									<div>{productsPrice + deliveryPrice} ₽</div>
+								</div>
+							}
+							{shippingType === 'pickup' &&
+								<p>Самовывоз осуществляется из магазина "Твоя полка" в тц "Пирамида" по адресу: ул.Кирова д.19а (ежедневно с 10:00 до 20:00)</p>
+							}
+						</div>
+						<p>При наличии вопросов обращайтесь по электронной почте:</p>
+						<a href={`mailto:${process.env.NEXT_PUBLIC_SHOP_EMAIL}`}>{process.env.NEXT_PUBLIC_SHOP_EMAIL}</a>
+					</Paper>
+					<h4>Товары в заказе</h4>
+					<div className={styles.productsContainer}>
+						<OrderProducts products={products} />
+					</div>
+				</>
+				:
+				<NoProductsToOrder />
+			}
 		</div>
 	);
 };

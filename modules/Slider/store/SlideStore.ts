@@ -1,28 +1,22 @@
-import { makeAutoObservable } from 'mobx';
+import { create } from 'zustand';
+import { devtools, persist } from 'zustand/middleware';
 
-
-export class SlideStore {
-	_slideIndex: number;
-	_tabUsed: boolean;
-	constructor() {
-		this._slideIndex = 0;
-		this._tabUsed = false;
-		makeAutoObservable(this);
-	}
-
-	setSlideIndex(slideIndex: number): void {
-		this._slideIndex = slideIndex;
-	}
-
-	setTabUsed(tabUsed: boolean): void {
-		this._tabUsed = tabUsed;
-	}
-
-	get slideIndex() {
-		return this._slideIndex;
-	}
-
-	get tabUsed() {
-		return this._tabUsed;
-	}
+interface SliderState {
+	slideIndex: number,
+	setSlideIndex: (slideIndex: number) => void,
 }
+
+export const useSliderStore = create<SliderState>()(
+	devtools(
+		persist(
+			(set) => ({
+				slideIndex: 0,
+
+				setSlideIndex: (slideIndex) => set(() => ({ slideIndex: slideIndex })),
+			}),
+			{
+				name: 'slider-storage'
+			}
+		)
+	)
+);

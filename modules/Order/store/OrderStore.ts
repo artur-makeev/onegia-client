@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { devtools, persist } from 'zustand/middleware';
 import { BasketProduct, ClientInfo, ShippingType } from '../../../models/Models';
 
 interface OrderState {
@@ -19,41 +18,33 @@ interface OrderState {
 }
 
 export const useOrderStore = create<OrderState>()(
-	devtools(
-		persist(
-			(set) => ({
-				id: 0,
-				confirmed: false,
-				products: [],
-				clientInfo: {
-					lastName: '',
-					firstName: '',
-					fatherName: '',
-					email: '',
-					phone: '',
-					address: '',
-					contact: ''
-				},
-				deliveryPrice: 0,
-				deliveryTime: 0,
-				shippingType: '',
+	(set) => ({
+		id: 0,
+		confirmed: false,
+		products: [],
+		clientInfo: {
+			lastName: '',
+			firstName: '',
+			fatherName: '',
+			email: '',
+			phone: '',
+			address: '',
+			contact: ''
+		},
+		deliveryPrice: 0,
+		deliveryTime: 0,
+		shippingType: '',
 
-				setId: (pk) => set(() => ({ id: pk })),
+		setId: (pk) => set(() => ({ id: pk })),
 
-				setProducts: (products) => set(() => ({ products: products })),
+		setProducts: (products) => set(() => ({ products: products })),
 
-				setClientInfo: (clientInfo) => set(() => ({ clientInfo: clientInfo })),
+		setClientInfo: (clientInfo) => set(() => ({ clientInfo: clientInfo })),
 
-				setDeliveryPrice: (price) => set(() => ({ deliveryPrice: price })),
+		setDeliveryPrice: (price) => set(() => ({ deliveryPrice: price })),
 
-				setDeliveryTime: (time) => set(() => ({ deliveryTime: time })),
+		setDeliveryTime: (time) => set(() => ({ deliveryTime: time })),
 
-				setShippingType: (type) => set(() => ({ shippingType: type }))
-
-			}),
-			{
-				name: 'basket-storage',
-			}
-		)
-	)
+		setShippingType: (type) => set(() => ({ shippingType: type }))
+	}),
 );

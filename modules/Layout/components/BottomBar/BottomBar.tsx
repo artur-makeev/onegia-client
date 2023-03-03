@@ -13,7 +13,7 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useBasketProductsQuantity } from '../../../Basket/store/BasketComputedValues';
-import { useHasHydrated } from '../../hooks/useHasHydrated';
+import { useHasHydrated } from '../../../../hooks/useHasHydrated';
 
 export const BottomBar = () => {
 	const hasHydrated = useHasHydrated();

@@ -11,7 +11,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Badge from '@mui/material/Badge';
 import { Vkontakte } from '../../../../UI';
 import { useBasketProductsQuantity } from '../../../Basket/store/BasketComputedValues';
-import { useHasHydrated } from '../../hooks/useHasHydrated';
+import { useHasHydrated } from '../../../../hooks/useHasHydrated';
 import { useSliderStore } from '../../../Slider/store/SlideStore';
 
 export const NavBar = () => {

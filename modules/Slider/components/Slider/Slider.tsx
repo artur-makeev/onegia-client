@@ -11,6 +11,7 @@ import { useSliderStore } from '../../store/SlideStore';
 
 
 export const Slider = () => {
+
 	const slideIndex = useSliderStore(state => state.slideIndex);
 	const setSlideIndex = useSliderStore(state => state.setSlideIndex);
 	const itemsRef = useRef<HTMLButtonElement[]>([]);
@@ -43,8 +44,7 @@ export const Slider = () => {
 	return (
 		<div className={styles.container}>
 			<div
-				className={`${styles.wrapper} ${slideIndex === 0 ? styles.switchSlide1 :
-					slideIndex === 1 ? styles.switchSlide2 : styles.switchSlide3}`}
+				className={`${styles.wrapper} ${slideIndex === 0 ? styles.switchSlide1 : slideIndex === 1 ? styles.switchSlide2 : styles.switchSlide3}`}
 			>
 				{slidesData.map((slide: Slide, index: number, array: Slide[]) => {
 					return (

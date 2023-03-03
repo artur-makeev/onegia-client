@@ -1,7 +1,7 @@
 import * as React from 'react';
 import type { AppProps } from 'next/app';
 import { CacheProvider, EmotionCache } from '@emotion/react';
-import { ThemeProvider, CssBaseline, createTheme } from '@mui/material';
+import { ThemeProvider, createTheme } from '@mui/material';
 
 import createEmotionCache from '../utilities/createEmotionCache';
 import { themeOptions } from '../styles/theme/theme';
@@ -30,7 +30,7 @@ const inter = Inter({
 
 
 const App: React.FunctionComponent<AppPropsExtended> = (props) => {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const { Component, emotionCache = clientSideEmotionCache, pageProps, } = props;
   const setBasketProducts = useBasketStore(state => state.setProducts);
   const setBasketLoaded = useBasketStore(state => state.setLoaded);
 
@@ -46,7 +46,6 @@ const App: React.FunctionComponent<AppPropsExtended> = (props) => {
   return (
     <CacheProvider value={emotionCache}>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
         <Head>
           <title>Onegia</title>
           <meta name="viewport" content="width=device-width, initial-scale=1" />

@@ -8,7 +8,7 @@ export type WithYandexMetrikaProps = {
 
 const enabled =
 	process.env.NODE_ENV === 'production' &&
-	process.env.YANDEX_METRIKA_ID;
+	process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID;
 
 const WithYandexMetrika = (props: WithYandexMetrikaProps) => {
 	const { children } = props;
@@ -30,7 +30,7 @@ const WithYandexMetrika = (props: WithYandexMetrikaProps) => {
 		<>
 			{enabled && (
 				<YMInitializer
-					accounts={[Number(process.env.YANDEX_METRIKA_ID)]}
+					accounts={[Number(process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID)]}
 					options={{ webvisor: false, defer: true }}
 					version="2"
 				/>

@@ -44,21 +44,21 @@ const App: React.FunctionComponent<AppPropsExtended> = (props) => {
   }, []);
 
   return (
-    <WithYandexMetrika>
-      <CacheProvider value={emotionCache}>
-        <ThemeProvider theme={theme}>
-          <Head>
-            <title>Onegia</title>
-            <meta name="viewport" content="width=device-width, initial-scale=1" />
-          </Head>
+    <CacheProvider value={emotionCache}>
+      <ThemeProvider theme={theme}>
+        <Head>
+          <title>Onegia</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+        </Head>
+        <WithYandexMetrika>
           <div className={inter.className}>
             <NavBar />
             <Component {...pageProps} />
             <BottomBar />
           </div>
-        </ThemeProvider>
-      </CacheProvider>
-    </WithYandexMetrika>
+        </WithYandexMetrika>
+      </ThemeProvider>
+    </CacheProvider>
   );
 };
 

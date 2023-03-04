@@ -55,7 +55,7 @@ export const Slider = () => {
 									src={slide.img}
 									priority={slide.id === 1 ? true : false}
 									placeholder="empty"
-									fill={true}
+									fill
 									sizes="(max-width: 1095px) 623px, (max-width: 623px) 100vw"
 									alt={slide.title}
 								/>

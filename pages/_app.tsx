@@ -49,7 +49,6 @@ const App: React.FunctionComponent<AppPropsExtended> = (props) => {
         <Head>
           <title>Onegia</title>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <link rel="preconnect" href="https://mc.yandex.ru" />
         </Head>
         <div className={inter.className}>
           <NavBar />

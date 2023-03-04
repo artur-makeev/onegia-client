@@ -10,11 +10,11 @@ import '../styles/globals.css';
 import { useEffect } from 'react';
 import { Inter } from '@next/font/google';
 
-
 import { NavBar, BottomBar } from '../modules/Layout/';
 import Head from 'next/head';
 
 import { useBasketStore } from '../modules/Basket/store/BasketStore';
+import WithYandexMetrika from '../Providers/WithYandexMetrika';
 
 interface AppPropsExtended extends AppProps {
   emotionCache?: EmotionCache;
@@ -44,19 +44,21 @@ const App: React.FunctionComponent<AppPropsExtended> = (props) => {
   }, []);
 
   return (
-    <CacheProvider value={emotionCache}>
-      <ThemeProvider theme={theme}>
-        <Head>
-          <title>Onegia</title>
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-        </Head>
-        <div className={inter.className}>
-          <NavBar />
-          <Component {...pageProps} />
-          <BottomBar />
-        </div>
-      </ThemeProvider>
-    </CacheProvider>
+    <WithYandexMetrika>
+      <CacheProvider value={emotionCache}>
+        <ThemeProvider theme={theme}>
+          <Head>
+            <title>Onegia</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+          </Head>
+          <div className={inter.className}>
+            <NavBar />
+            <Component {...pageProps} />
+            <BottomBar />
+          </div>
+        </ThemeProvider>
+      </CacheProvider>
+    </WithYandexMetrika>
   );
 };
 

@@ -46,7 +46,7 @@ export const Slider = () => {
 			<div
 				className={`${styles.wrapper} ${slideIndex === 0 ? styles.switchSlide1 : slideIndex === 1 ? styles.switchSlide2 : styles.switchSlide3}`}
 			>
-				{slidesData.map((slide: Slide, index: number, array: Slide[]) => {
+				{slidesData.map((slide, index: number, array: Slide[]) => {
 					return (
 						<div key={slide.id} className={styles.slide}>
 							<div className={styles.imgContainer}>
@@ -78,12 +78,14 @@ export const Slider = () => {
 										<div
 											className={`${styles.arrow} ${styles.leftArrow}`}
 											onClick={() => handleClick('left')}
+											data-testid="left slide"
 										>
 											<ArrowBackIosOutlinedIcon />
 										</div>
 										<div
 											className={`${styles.arrow} ${styles.rightArrow}`}
 											onClick={() => handleClick('right')}
+											data-testid="right slide"
 										>
 											<ArrowForwardIosOutlinedIcon />
 										</div>

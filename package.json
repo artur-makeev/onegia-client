@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:js": "eslint . --ext .js,.jsx,.ts,.tsx",
     "stylelint": "stylelint \"**/*.css\" --fix",
     "test": "jest --detectOpenHandles",
     "analyze": "cross-env ANALYZE=true next build"

@@ -27,9 +27,10 @@ const nextConfig = {
     return config;
   }
 };
-
+// eslint-disable-next-line
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  // eslint-disable-next-line
   enabled: process.env.ANALYZE === 'true',
-})
+});
 // eslint-disable-next-line
 module.exports = withBundleAnalyzer(nextConfig);

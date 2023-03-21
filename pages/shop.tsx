@@ -17,7 +17,7 @@ const ShopPage = ({ products }: Props): JSX.Element => {
 export default ShopPage;
 
 export const getStaticProps = async () => {
-	const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/api/product',);
+	const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/api/product');
 	const products = await response.json();
 
 	if (!products) {

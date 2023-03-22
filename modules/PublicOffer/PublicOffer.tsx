@@ -3,7 +3,7 @@ import Paper from '@mui/material/Paper';
 
 export const PublicOffer = () => {
 	return (
-		<div className={styles.container}>
+		<div className={styles.container} data-testid='public-offer'>
 			<Paper className={styles.paper}>
 				<h1 className={styles.heading}>ПУБЛИЧНАЯ ОФЕРТА</h1>
 				<h2 className={styles.heading}>о заключении договора купли-продажи</h2>

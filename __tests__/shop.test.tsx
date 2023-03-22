@@ -12,14 +12,10 @@ describe('Shop page', () => {
 
 	it('it renders products', () => {
 		const products = mockProducts;
-		render(
-			<ShopPage products={products} />
-
-		);
+		render(<ShopPage products={products} />);
 		const allProducts = screen.getByRole('list', { name: /products/i });
 		const { getAllByRole } = within(allProducts);
 		const listItems = getAllByRole('listitem');
 		expect(listItems.length).toBe(mockProducts.length);
 	});
-
 });

@@ -7,4 +7,12 @@ describe('Payment Success page', () => {
 		render(<SuccessPage />);
 		screen.getByRole('heading', { name: /Оплата прошла успешно/i });
 	});
+
+	it('displays success message when paymentSuccessful is true', () => {
+		render(<SuccessPage />);
+		const successMessage = screen.getByText('Оплата прошла успешно');
+		expect(successMessage).toBeInTheDocument();
+	});
+
+
 });

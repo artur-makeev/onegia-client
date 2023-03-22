@@ -56,4 +56,13 @@ describe('Slider', () => {
 		expect(result.current).toBe(slidesData.length - 1);
 	});
 
+	it('sets correct alt text for slide images', () => {
+		render(<HomePage />);
+		const images = screen.getAllByRole('img');
+
+		images.forEach((image, index) => {
+			const slide = slidesData[index];
+			expect(image).toHaveAttribute('alt', slide.title);
+		});
+	});
 });

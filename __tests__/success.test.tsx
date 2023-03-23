@@ -13,6 +13,4 @@ describe('Payment Success page', () => {
 		const successMessage = screen.getByText('Оплата прошла успешно');
 		expect(successMessage).toBeInTheDocument();
 	});
-
-
 });

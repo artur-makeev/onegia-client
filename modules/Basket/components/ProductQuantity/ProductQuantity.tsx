@@ -4,16 +4,19 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useBasketStore } from '../../store/BasketStore';
 
-
 type Props = {
 	productId: number;
 	count: number;
 	aromaId: number;
 };
 
-export const ProductQuantity = ({ productId, count, aromaId }: Props): JSX.Element => {
-	const addProduct = useBasketStore(state => state.addProduct);
-	const deleteProduct = useBasketStore(state => state.deleteProduct);
+export const ProductQuantity = ({
+	productId,
+	count,
+	aromaId,
+}: Props): JSX.Element => {
+	const addProduct = useBasketStore((state) => state.addProduct);
+	const deleteProduct = useBasketStore((state) => state.deleteProduct);
 	const [counter, setCounter] = useState(count);
 
 	const oneMore = (id: number) => {
@@ -33,14 +36,17 @@ export const ProductQuantity = ({ productId, count, aromaId }: Props): JSX.Eleme
 		<>
 			<RemoveIcon
 				className={styles.icon}
-				onClick={() => { oneLess(productId); }}
+				onClick={() => {
+					oneLess(productId);
+				}}
 			/>
 			<p>{counter} шт.</p>
 			<AddIcon
 				className={styles.icon}
-				onClick={() => { oneMore(productId); }}
+				onClick={() => {
+					oneMore(productId);
+				}}
 			/>
 		</>
 	);
 };
-

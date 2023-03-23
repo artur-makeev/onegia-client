@@ -1,4 +1,5 @@
-declare module "*.svg" {
+/* eslint-disable @typescript-eslint/consistent-type-imports */
+declare module '*.svg' {
 	const content: React.FunctionComponent<React.SVGAttributes<SVGAElement>>;
 	export default content;
 }

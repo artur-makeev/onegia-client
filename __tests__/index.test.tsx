@@ -3,27 +3,23 @@ import HomePage from '../pages';
 import { fireEvent, render, renderHook, screen } from '@testing-library/react';
 import { slidesData, useSliderStore } from '../modules/Slider';
 
-
 describe('Home page', () => {
 	it('render a slide heading', () => {
-		render(
-			<HomePage />
-		);
+		render(<HomePage />);
 		expect(screen.getByRole('heading', { name: /Cвечи/i })).toBeInTheDocument();
 	});
 
 	it('renders slider buttons', () => {
-		render(
-			<HomePage />
-		);
-		const catalogButtons = screen.queryAllByRole('button', { name: /Каталог/i });
+		render(<HomePage />);
+		const catalogButtons = screen.queryAllByRole('button', {
+			name: /Каталог/i,
+		});
 		expect(catalogButtons).toHaveLength(slidesData.length);
 
 		catalogButtons.forEach((button) => {
 			expect(button).toBeInTheDocument();
 		});
 	});
-
 });
 
 describe('Slider', () => {
@@ -32,11 +28,11 @@ describe('Slider', () => {
 	});
 
 	it('correctly changes slide index state when pressing arrow buttons', () => {
-		const { result } = renderHook(() => useSliderStore(state => state.slideIndex));
-
-		render(
-			<HomePage />
+		const { result } = renderHook(() =>
+			useSliderStore((state) => state.slideIndex)
 		);
+
+		render(<HomePage />);
 
 		const buttonsRight = screen.getAllByTestId('right slide');
 		const buttonsLeft = screen.getAllByTestId('left slide');
@@ -49,7 +45,6 @@ describe('Slider', () => {
 			} else {
 				expect(result.current).toBe(i + 1);
 			}
-
 		}
 
 		fireEvent.click(buttonsLeft[0]);

@@ -5,7 +5,6 @@ import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import Link from 'next/link';
 import LogoIcon from '../../../../public/images/logo.svg';
-import { BASKET_ROUTE, CONTACTS_ROUTE, SHOP_ROUTE, VK_LINK } from '../../../../utilities/consts';
 import styles from './NavBar.module.css';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Badge from '@mui/material/Badge';
@@ -13,10 +12,12 @@ import { Vkontakte } from '../../../../UI';
 import { useBasketProductsQuantity } from '../../../Basket/store/BasketComputedValues';
 import { useHasHydrated } from '../../../../hooks/useHasHydrated';
 import { useSliderStore } from '../../../Slider/store/SlideStore';
+import { BASKET_ROUTE, CONTACTS_ROUTE } from '../../../../utilities/consts';
+import { SHOP_ROUTE, VK_LINK } from '../../../../utilities/consts';
 
 export const NavBar = () => {
 	const hasHydrated = useHasHydrated();
-	const setSlideIndex = useSliderStore(state => state.setSlideIndex);
+	const setSlideIndex = useSliderStore((state) => state.setSlideIndex);
 	const [productsQuantity] = useBasketProductsQuantity();
 
 	const handleTab = (e: React.KeyboardEvent) => {
@@ -27,10 +28,10 @@ export const NavBar = () => {
 
 	return (
 		<Box sx={{ flexGrow: 1 }}>
-			<AppBar position="fixed">
+			<AppBar position='fixed'>
 				<Toolbar className={styles.navContent}>
 					<div className={styles.logos}>
-						<Link href="/" aria-label='главная страница'>
+						<Link href='/' aria-label='главная страница'>
 							<LogoIcon className={styles.logo} />
 						</Link>
 						<a className={styles.navLinks} href={VK_LINK} target='_blank'>
@@ -49,7 +50,11 @@ export const NavBar = () => {
 							<Button className={styles.navLink}>Контакты</Button>
 						</Link>
 						<Link href={BASKET_ROUTE}>
-							<Button className={styles.navLink} aria-label='корзина' onKeyDown={(e) => handleTab(e)}>
+							<Button
+								className={styles.navLink}
+								aria-label='корзина'
+								onKeyDown={(e) => handleTab(e)}
+							>
 								<Badge
 									badgeContent={hasHydrated && productsQuantity}
 									color='secondary'
@@ -61,6 +66,6 @@ export const NavBar = () => {
 					</div>
 				</Toolbar>
 			</AppBar>
-		</Box >
+		</Box>
 	);
 };

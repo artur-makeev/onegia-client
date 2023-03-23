@@ -3,7 +3,6 @@ import ShopPage from '../pages/shop';
 import { render, screen, within } from '@testing-library/react';
 import { mockProducts } from '../__mocks__/mockProducts';
 
-
 describe('Shop page', () => {
 	it('render a Shop Page heading', () => {
 		render(<ShopPage products={mockProducts} />);

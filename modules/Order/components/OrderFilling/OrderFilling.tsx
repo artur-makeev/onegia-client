@@ -10,28 +10,28 @@ import { OFFER_ROUTE } from '../../../../utilities/consts';
 import { OrderProducts } from '../OrderProducts/OrderProducts';
 import { daySpelling } from '../../helpers/daySpelling';
 import { useBasketStore } from '../../../Basket/store/BasketStore';
-import { useBasketProductsQuantity, useBasketTotalPrice } from '../../../Basket/store/BasketComputedValues';
+import { useBasketProductsQuantity } from '../../../Basket/store/BasketComputedValues';
+import { useBasketTotalPrice } from '../../../Basket/store/BasketComputedValues';
 import { NoProductsToOrder } from '../noProducts/NoProducts';
 import { useOrderStore } from '../../store/OrderStore';
-
 
 export const OrderFilling = (): JSX.Element => {
 	const [formValid, setFormValid] = useState(false);
 	const router = useRouter();
 
-	const basketProducts = useBasketStore(state => state.products);
-	const basketLoaded = useBasketStore(state => state.loaded);
-	const basketSetProducts = useBasketStore(state => state.setProducts);
+	const basketProducts = useBasketStore((state) => state.products);
+	const basketLoaded = useBasketStore((state) => state.loaded);
+	const basketSetProducts = useBasketStore((state) => state.setProducts);
 	const [basketTotalPrice] = useBasketTotalPrice();
 	const [basketProductsQuantity] = useBasketProductsQuantity();
 
-	const orderProducts = useOrderStore(state => state.products);
-	const clientInfo = useOrderStore(state => state.clientInfo);
-	const shippingType = useOrderStore(state => state.shippingType);
-	const deliveryTime = useOrderStore(state => state.deliveryTime);
-	const deliveryPrice = useOrderStore(state => state.deliveryPrice);
-	const setId = useOrderStore(state => state.setId);
-	const setProducts = useOrderStore(state => state.setProducts);
+	const orderProducts = useOrderStore((state) => state.products);
+	const clientInfo = useOrderStore((state) => state.clientInfo);
+	const shippingType = useOrderStore((state) => state.shippingType);
+	const deliveryTime = useOrderStore((state) => state.deliveryTime);
+	const deliveryPrice = useOrderStore((state) => state.deliveryPrice);
+	const setId = useOrderStore((state) => state.setId);
+	const setProducts = useOrderStore((state) => state.setProducts);
 
 	const createOrder = async () => {
 		const formData = new FormData();
@@ -40,12 +40,19 @@ export const OrderFilling = (): JSX.Element => {
 		formData.append('fatherName', clientInfo.fatherName);
 		formData.append('email', clientInfo.email);
 		formData.append('phone', clientInfo.phone);
-		formData.append('address', shippingType === 'cdek' ? clientInfo.address : 'Петрозаводск');
+		formData.append(
+			'address',
+			shippingType === 'cdek' ? clientInfo.address : 'Петрозаводск'
+		);
 		formData.append('contact', clientInfo.contact);
 		formData.append('shippingType', shippingType);
 		formData.append('shippingTime', deliveryTime.toString());
-		formData.append('shippingPrice', shippingType === 'pickup' || shippingType === 'yandex'
-			? '0' : deliveryPrice.toString());
+		formData.append(
+			'shippingPrice',
+			shippingType === 'pickup' || shippingType === 'yandex'
+				? '0'
+				: deliveryPrice.toString()
+		);
 		formData.append('productsPrice', JSON.stringify(basketTotalPrice));
 		formData.append('basketProducts', JSON.stringify(basketProducts));
 		setId(await orderConfirm(formData));
@@ -58,13 +65,15 @@ export const OrderFilling = (): JSX.Element => {
 	return (
 		<div className={styles.container}>
 			<h1>Оформление заказа</h1>
-			{basketProducts.length > 0 || orderProducts.length > 0 && basketLoaded ?
+			{basketProducts.length > 0 ||
+			(orderProducts.length > 0 && basketLoaded) ? (
 				<div className={styles.orderContainer}>
 					<div className={styles.addressContainer}>
 						<div className={styles.orderForm}>
-							<AddressForm
-								setFormValid={setFormValid} />
-							<Link href={OFFER_ROUTE} className={styles.offer}>Публичная оферта</Link>
+							<AddressForm setFormValid={setFormValid} />
+							<Link href={OFFER_ROUTE} className={styles.offer}>
+								Публичная оферта
+							</Link>
 							<Button
 								disabled={!formValid}
 								onClick={createOrder}
@@ -83,21 +92,21 @@ export const OrderFilling = (): JSX.Element => {
 									<div>Товары ({basketProductsQuantity} шт.)</div>
 									<div>{basketTotalPrice} ₽</div>
 								</div>
-								{shippingType === 'cdek' && deliveryPrice !== 0 &&
+								{shippingType === 'cdek' && deliveryPrice !== 0 && (
 									<div>
-										{shippingType === 'cdek' &&
+										{shippingType === 'cdek' && (
 											<div className={styles.row}>
 												<div>Доставка (СДЭК)</div>
 												<div>{deliveryPrice} ₽</div>
 											</div>
-										}
+										)}
 										<div className={styles.row}>
 											<h4>Итого</h4>
 											<h4>{basketTotalPrice + deliveryPrice} ₽</h4>
 										</div>
 									</div>
-								}
-								{shippingType === 'pickup' &&
+								)}
+								{shippingType === 'pickup' && (
 									<div>
 										<div className={styles.row}>
 											<div>Самовывоз</div>
@@ -114,22 +123,24 @@ export const OrderFilling = (): JSX.Element => {
 											<p>Ежедневно с 10:00 до 20:00</p>
 										</div>
 									</div>
-								}
-								{shippingType === 'yandex' &&
+								)}
+								{shippingType === 'yandex' && (
 									<p>доставка оплачивается отдельно</p>
-								}
+								)}
 								<p>Производство займет 3 дня</p>
-								{shippingType === 'cdek' && deliveryPrice !== 0 &&
-									<p>Доставка займет {deliveryTime} {daySpelling(deliveryTime)}</p>
-								}
+								{shippingType === 'cdek' && deliveryPrice !== 0 && (
+									<p>
+										Доставка займет {deliveryTime} {daySpelling(deliveryTime)}
+									</p>
+								)}
 							</Paper>
 							<OrderProducts products={basketProducts} />
 						</div>
 					</div>
 				</div>
-				:
+			) : (
 				<NoProductsToOrder />
-			}
+			)}
 		</div>
 	);
 };

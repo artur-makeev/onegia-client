@@ -1,4 +1,4 @@
-import { ThemeOptions } from '@mui/material/styles';
+import type { ThemeOptions } from '@mui/material/styles';
 
 export const themeOptions: ThemeOptions = {
 	palette: {
@@ -15,5 +15,5 @@ export const themeOptions: ThemeOptions = {
 			contrastText: '#fff',
 		},
 	},
-	typography: { fontFamily: 'unset' }
+	typography: { fontFamily: 'unset' },
 };

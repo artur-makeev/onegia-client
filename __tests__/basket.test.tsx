@@ -4,13 +4,10 @@ import { render, screen, within } from '@testing-library/react';
 import { mockBasket } from '../__mocks__/mockBasket';
 import { useBasketStore } from '../modules/Basket';
 
-
 describe('Basket page', () => {
-
 	beforeEach(() => {
 		useBasketStore.setState({ products: mockBasket });
 	});
-
 
 	it('render a page heading', () => {
 		//	mockRouter.isReady;
@@ -19,10 +16,7 @@ describe('Basket page', () => {
 	});
 
 	it('renders corerect number of rows with basket products and correct total sum', () => {
-
-		render(
-			<BasketPage />
-		);
+		render(<BasketPage />);
 		screen.getByText(/3250/i);
 		const table_items = screen.getByRole('table', { name: /products/i });
 		const { getAllByRole } = within(table_items);
@@ -31,11 +25,7 @@ describe('Basket page', () => {
 	});
 
 	it('renders corerect information about products', () => {
-
-
-		render(
-			<BasketPage />
-		);
+		render(<BasketPage />);
 		screen.getByText(/Твердые духи/i);
 		screen.getByText(/Pride/i);
 		screen.getByText(/450/i);

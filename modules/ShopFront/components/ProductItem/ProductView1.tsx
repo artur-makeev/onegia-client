@@ -1,29 +1,39 @@
 import styles from './ProductItemMain/ProductItem.module.css';
-import { Product } from '../../../../models/Models';
+import type { Product } from '../../models/Product';
 import Image from 'next/image';
 import Button from '@mui/material/Button';
 
 type Props = {
-	product: Product,
-	productVariations: () => void
+	product: Product;
+	productVariations: () => void;
 };
 
-export const ProductView1 = ({ product, productVariations }: Props): JSX.Element => {
-	const myLoader = ({ src, width, quality }: { src: string, width: number, quality?: number }): string => {
-		return `${src}?w=${width}&q=${quality || 100}`;
-	};
+export const ProductView1 = ({
+	product,
+	productVariations,
+}: Props): JSX.Element => {
+	const myLoader = ({
+		src,
+		width,
+		quality,
+	}: {
+		src: string;
+		width: number;
+		quality?: number;
+	}): string => `${src}?w=${width}&q=${quality || 100}`;
 
 	return (
 		<div className={styles.product}>
 			<div>
 				<div className={styles.productPhoto}>
 					<Image
-						src={process.env.NEXT_PUBLIC_API_URL + "/static/" + product.img}
+						src={process.env.NEXT_PUBLIC_API_URL + '/static/' + product.img}
 						width={300}
 						height={300}
 						loader={myLoader}
 						priority={product.id === 1 ? true : false}
-						alt={product.name} />
+						alt={product.name}
+					/>
 				</div>
 				<div className={styles.description}>
 					<p>{product.name}</p>

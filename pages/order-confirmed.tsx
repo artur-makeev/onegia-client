@@ -1,12 +1,10 @@
 import { OrderConfirmation } from '../modules/Order';
 import styles from '../styles/order.module.css';
 
-const OrderConfirmationPage = (): JSX.Element => {
-	return (
-		<div className={styles.container}>
-			<OrderConfirmation />
-		</div>
-	);
-};
+const OrderConfirmationPage = (): JSX.Element => (
+	<div className={styles.container}>
+		<OrderConfirmation />
+	</div>
+);
 
 export default OrderConfirmationPage;

@@ -1,22 +1,25 @@
 import styles from './AddressForm.module.css';
-import { useEffect, useRef, MutableRefObject } from 'react';
+import type { MutableRefObject } from 'react';
+import { useEffect, useRef } from 'react';
 import { useState } from 'react';
-import { Contact, AddressOption, Branch, Coords } from '../../../../models/Models';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import MenuItem from '@mui/material/MenuItem'; '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import { YandexMap } from '../YandexMap/YandexMap';
 import { Cdek } from '../Cdek/Cdek';
 import { useOrderStore } from '../../store/OrderStore';
-
+import type { Contact } from '../../models/Contact';
+import type { BranchOption } from '../../models/Branch';
+import type { Branch } from '../../models/Branch';
+import type { Coords } from '../../models/Coords';
 
 type Props = {
-	setFormValid: React.Dispatch<React.SetStateAction<boolean>>,
+	setFormValid: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const AddressForm = ({ setFormValid }: Props): JSX.Element => {
-	const shippingType = useOrderStore(state => state.shippingType);
-	const setClientInfo = useOrderStore(state => state.setClientInfo);
+	const shippingType = useOrderStore((state) => state.shippingType);
+	const setClientInfo = useOrderStore((state) => state.setClientInfo);
 
 	const [lastName, setLastName] = useState('');
 	const [firstName, setFirstName] = useState('');
@@ -34,14 +37,21 @@ export const AddressForm = ({ setFormValid }: Props): JSX.Element => {
 	const [cdekApiError, setCdekApiError] = useState(false);
 
 	const addresses = useRef([]) as MutableRefObject<Branch[]>;
-	const [selectedBranch, setSelectedBranch] = useState<AddressOption | null>(null);
+	const [selectedBranch, setSelectedBranch] = useState<BranchOption | null>(
+		null
+	);
 
-	const [cityCenter, setCityCenter] = useState<Coords>({ latitude: 61.789263, longitude: 34.372298 });
+	const [cityCenter, setCityCenter] = useState<Coords>({
+		latitude: 61.789263,
+		longitude: 34.372298,
+	});
 	const [showMap, setShowMap] = useState<boolean>(false);
 
-	const emailHandler = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+	const emailHandler = (
+		e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+	) => {
 		setEmail(e.target.value);
-		// eslint-disable-next-line
+
 		const re = /^\S+@\S+\.\S+$/;
 
 		if (!re.test(String(e.target.value).toLowerCase())) {
@@ -55,15 +65,31 @@ export const AddressForm = ({ setFormValid }: Props): JSX.Element => {
 
 	// form validation
 	useEffect(() => {
-		if (lastName && firstName && fatherName && email && phone &&
-			selectedBranch || shippingType === 'pickup' || shippingType === 'yandex' &&
-			emailError === '' && contact) {
+		if (
+			(lastName &&
+				firstName &&
+				fatherName &&
+				email &&
+				phone &&
+				selectedBranch) ||
+			shippingType === 'pickup' ||
+			(shippingType === 'yandex' && emailError === '' && contact)
+		) {
 			setFormValid(true);
 		} else {
 			setFormValid(false);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [lastName, firstName, fatherName, email, phone, selectedBranch, contact, shippingType]);
+	}, [
+		lastName,
+		firstName,
+		fatherName,
+		email,
+		phone,
+		selectedBranch,
+		contact,
+		shippingType,
+	]);
 
 	const updateAddressData = () => {
 		setClientInfo({
@@ -72,8 +98,8 @@ export const AddressForm = ({ setFormValid }: Props): JSX.Element => {
 			fatherName: fatherName,
 			email: email,
 			phone: phone,
-			address: !cdekApiError ? selectedBranch as string : address,
-			contact: contact
+			address: !cdekApiError ? (selectedBranch as string) : address,
+			contact: contact,
 		});
 	};
 
@@ -82,51 +108,52 @@ export const AddressForm = ({ setFormValid }: Props): JSX.Element => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [lastName, firstName, fatherName, email, phone, selectedBranch, contact]);
 
-
 	return (
 		<Box
 			className={styles.container}
-			component="form"
+			component='form'
 			sx={{
 				'& > :not(style)': { m: 1 },
 			}}
 			noValidate
-			autoComplete="off"
+			autoComplete='off'
 		>
 			<TextField
 				required
-				label="Фамилия"
+				label='Фамилия'
 				value={lastName}
 				onChange={(e) => setLastName(e.target.value)}
-				variant="outlined"
+				variant='outlined'
 			/>
 			<TextField
 				required
-				label="Имя"
+				label='Имя'
 				value={firstName}
 				onChange={(e) => setFirstName(e.target.value)}
-				variant="outlined"
+				variant='outlined'
 			/>
 			<TextField
 				required
-				label="Отчество"
+				label='Отчество'
 				value={fatherName}
 				onChange={(e) => setFatherName(e.target.value)}
-				variant="outlined"
+				variant='outlined'
 			/>
 			<TextField
 				required
-				label="Телефон"
+				label='Телефон'
 				value={phone}
 				onChange={(e) => setPhone(e.target.value)}
-				variant="outlined"
+				variant='outlined'
 			/>
 			<TextField
 				required
-				label="Email"
-				variant="outlined"
+				label='Email'
+				variant='outlined'
 				value={email}
-				onChange={(e) => { emailHandler(e); }}
+				onChange={(e) => {
+					emailHandler(e);
+				}}
 				onBlur={() => setEmailDirty(true)}
 				error={emailDirty && emailIncorrect}
 			/>
@@ -138,12 +165,20 @@ export const AddressForm = ({ setFormValid }: Props): JSX.Element => {
 				onChange={(e) => setContact(e.target.value as Contact)}
 				select
 			>
-				<MenuItem className={styles.contactItem} value={'call'}>Позвонить</MenuItem>
-				<MenuItem className={styles.contactItem} value={'whatsup'}>Whatsup</MenuItem>
-				<MenuItem className={styles.contactItem} value={'telegram'}>Telegram</MenuItem>
-				<MenuItem className={styles.contactItem} value={'email'}>Email</MenuItem>
+				<MenuItem className={styles.contactItem} value={'call'}>
+					Позвонить
+				</MenuItem>
+				<MenuItem className={styles.contactItem} value={'whatsup'}>
+					Whatsup
+				</MenuItem>
+				<MenuItem className={styles.contactItem} value={'telegram'}>
+					Telegram
+				</MenuItem>
+				<MenuItem className={styles.contactItem} value={'email'}>
+					Email
+				</MenuItem>
 			</TextField>
-			{!cdekApiError ?
+			{!cdekApiError ? (
 				<Cdek
 					setCdekApiError={setCdekApiError}
 					setCityCenter={setCityCenter}
@@ -152,19 +187,19 @@ export const AddressForm = ({ setFormValid }: Props): JSX.Element => {
 					selectedBranch={selectedBranch}
 					setSelectedBranch={setSelectedBranch}
 				/>
-				:
+			) : (
 				<TextField
 					required
 					multiline
 					rows={2}
-					label="Адрес доставки"
-					variant="outlined"
+					label='Адрес доставки'
+					variant='outlined'
 					value={address}
 					inputProps={{ maxLength: 255 }}
 					onChange={(e) => setAddress(e.target.value)}
 				/>
-			}
-			{showMap &&
+			)}
+			{showMap && (
 				<div className={styles.map}>
 					<YandexMap
 						centerLongitude={cityCenter.longitude}
@@ -173,7 +208,7 @@ export const AddressForm = ({ setFormValid }: Props): JSX.Element => {
 						setSelectedBranch={setSelectedBranch}
 					/>
 				</div>
-			}
+			)}
 		</Box>
 	);
 };

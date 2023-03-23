@@ -1,9 +1,11 @@
-import React, { ReactNode, useCallback, useEffect } from 'react';
+import React from 'react';
+import type { ReactNode } from 'react';
+import { useCallback, useEffect } from 'react';
 import Router from 'next/router';
 import ym, { YMInitializer } from 'react-yandex-metrika';
 
 export type WithYandexMetrikaProps = {
-	children: ReactNode
+	children: ReactNode;
 };
 
 const enabled =
@@ -32,7 +34,7 @@ const WithYandexMetrika = (props: WithYandexMetrikaProps) => {
 				<YMInitializer
 					accounts={[Number(process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID)]}
 					options={{ webvisor: false, defer: true }}
-					version="2"
+					version='2'
 				/>
 			)}
 			{children}

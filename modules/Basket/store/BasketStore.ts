@@ -1,11 +1,11 @@
 import { create } from 'zustand';
-import { BasketProduct } from '../../../models/Models';
+import type { BasketProduct } from '../../../models/Models';
 
 interface BasketState {
-	products: BasketProduct[]
-	loaded: boolean
-	setProducts: (products: BasketProduct[]) => void,
-	setLoaded: (value: boolean) => void,
+	products: BasketProduct[];
+	loaded: boolean;
+	setProducts: (products: BasketProduct[]) => void;
+	setLoaded: (value: boolean) => void;
 	addProduct: (
 		productId: number,
 		productName: string,
@@ -15,46 +15,47 @@ interface BasketState {
 		aromaName: string,
 		quantity: number,
 		weight: number
-	) => void,
-	deleteProduct: (productId: number, aromaId: number) => void
+	) => void;
+	deleteProduct: (productId: number, aromaId: number) => void;
 }
 
-export const useBasketStore = create<BasketState>()(
-	(set) => ({
-		products: [],
-		loaded: false,
+export const useBasketStore = create<BasketState>()((set) => ({
+	products: [],
+	loaded: false,
 
-		setLoaded: (value) => set(() => ({ loaded: value })),
+	setLoaded: (value) => set(() => ({ loaded: value })),
 
-		setProducts: (products) => set(() => ({ products: products })),
+	setProducts: (products) => set(() => ({ products: products })),
 
-		addProduct: (
-			productId,
-			productName,
-			price,
-			img,
-			aromaId,
-			aromaName,
-			quantity,
-			weight
-		) => set((state) => {
+	addProduct: (
+		productId,
+		productName,
+		price,
+		img,
+		aromaId,
+		aromaName,
+		quantity,
+		weight
+	) =>
+		set((state) => {
 			const productsRaw = [...state.products];
-			const existingProduct = productsRaw.findIndex((product) => {
-				return product.productId === productId && product.aromaId === aromaId;
-			});
+			const existingProduct = productsRaw.findIndex(
+				(product) =>
+					product.productId === productId && product.aromaId === aromaId
+			);
 
 			if (existingProduct >= 0) {
 				productsRaw[existingProduct].count += 1;
 			} else {
 				productsRaw.push({
-					"productId": productId,
-					"name": productName,
-					"price": price,
-					"img": img,
-					"aromaId": aromaId,
-					"aromaName": aromaName,
-					"count": quantity,
-					"weight": weight
+					productId: productId,
+					name: productName,
+					price: price,
+					img: img,
+					aromaId: aromaId,
+					aromaName: aromaName,
+					count: quantity,
+					weight: weight,
 				});
 			}
 
@@ -62,11 +63,13 @@ export const useBasketStore = create<BasketState>()(
 			return { products: productsRaw };
 		}),
 
-		deleteProduct: (productId, aromaId) => set((state) => {
+	deleteProduct: (productId, aromaId) =>
+		set((state) => {
 			const productsRaw = [...state.products];
-			const productIndex = productsRaw.findIndex((product) => {
-				return product.productId === productId && product.aromaId === aromaId;
-			});
+			const productIndex = productsRaw.findIndex(
+				(product) =>
+					product.productId === productId && product.aromaId === aromaId
+			);
 
 			if (productIndex >= 0) {
 				productsRaw[productIndex].count -= 1;
@@ -79,6 +82,5 @@ export const useBasketStore = create<BasketState>()(
 			localStorage.setItem('products', JSON.stringify(productsRaw));
 
 			return { products: productsRaw };
-		})
-	}),
-);
+		}),
+}));

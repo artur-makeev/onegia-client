@@ -1,6 +1,15 @@
 import { create } from 'zustand';
 import type { BasketProduct } from '../../../models/Models';
 
+interface ProductInfo {
+	productName: string;
+	price: number;
+	img: string;
+	aromaName: string;
+	quantity: number;
+	weight: number;
+}
+
 interface BasketState {
 	products: BasketProduct[];
 	loaded: boolean;
@@ -8,13 +17,8 @@ interface BasketState {
 	setLoaded: (value: boolean) => void;
 	addProduct: (
 		productId: number,
-		productName: string,
-		price: number,
-		img: string,
 		aromaId: number,
-		aromaName: string,
-		quantity: number,
-		weight: number
+		productInfo?: ProductInfo
 	) => void;
 	deleteProduct: (productId: number, aromaId: number) => void;
 }
@@ -27,35 +31,26 @@ export const useBasketStore = create<BasketState>()((set) => ({
 
 	setProducts: (products) => set(() => ({ products: products })),
 
-	addProduct: (
-		productId,
-		productName,
-		price,
-		img,
-		aromaId,
-		aromaName,
-		quantity,
-		weight
-	) =>
+	addProduct: (productId, aromaId, productInfo) =>
 		set((state) => {
 			const productsRaw = [...state.products];
-			const existingProduct = productsRaw.findIndex(
+			const productIndex = productsRaw.findIndex(
 				(product) =>
 					product.productId === productId && product.aromaId === aromaId
 			);
 
-			if (existingProduct >= 0) {
-				productsRaw[existingProduct].count += 1;
-			} else {
+			if (productIndex >= 0) {
+				productsRaw[productIndex].count += 1;
+			} else if (productInfo) {
 				productsRaw.push({
-					productId: productId,
-					name: productName,
-					price: price,
-					img: img,
-					aromaId: aromaId,
-					aromaName: aromaName,
-					count: quantity,
-					weight: weight,
+					productId,
+					aromaId,
+					name: productInfo.productName,
+					price: productInfo.price,
+					img: productInfo.img,
+					aromaName: productInfo.aromaName,
+					count: productInfo.quantity,
+					weight: productInfo.weight,
 				});
 			}
 

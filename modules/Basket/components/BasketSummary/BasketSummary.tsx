@@ -4,15 +4,15 @@ import { Button } from '@mui/material';
 import Link from 'next/link';
 import Paper from '@mui/material/Paper';
 
-type Props = {
+interface BasketSummaryProps {
 	productsQuantity: number;
 	totalPrice: number;
-};
+}
 
 export const BasketSummary = ({
 	productsQuantity,
 	totalPrice,
-}: Props): JSX.Element => (
+}: BasketSummaryProps): JSX.Element => (
 	<Paper square className={styles.container}>
 		<div className={styles.content}>
 			<h3>Итог</h3>

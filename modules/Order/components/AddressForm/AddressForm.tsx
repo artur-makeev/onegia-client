@@ -8,10 +8,10 @@ import MenuItem from '@mui/material/MenuItem';
 import { YandexMap } from '../YandexMap/YandexMap';
 import { Cdek } from '../Cdek/Cdek';
 import { useOrderStore } from '../../store/OrderStore';
-import type { Contact } from '../../models/Contact';
 import type { BranchOption } from '../../models/Branch';
 import type { Branch } from '../../models/Branch';
 import type { Coords } from '../../models/Coords';
+import type { Contact } from '../../../../models/Models';
 
 type Props = {
 	setFormValid: React.Dispatch<React.SetStateAction<boolean>>;

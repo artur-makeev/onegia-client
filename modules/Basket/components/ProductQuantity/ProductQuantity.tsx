@@ -4,23 +4,23 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useBasketStore } from '../../store/BasketStore';
 
-type Props = {
+interface ProductQuantityProps {
 	productId: number;
 	count: number;
 	aromaId: number;
-};
+}
 
 export const ProductQuantity = ({
 	productId,
 	count,
 	aromaId,
-}: Props): JSX.Element => {
+}: ProductQuantityProps): JSX.Element => {
 	const addProduct = useBasketStore((state) => state.addProduct);
 	const deleteProduct = useBasketStore((state) => state.deleteProduct);
 	const [counter, setCounter] = useState(count);
 
 	const oneMore = (id: number) => {
-		addProduct(id, '', 0, '', aromaId, '', 1, 0);
+		addProduct(id, aromaId);
 		setCounter(counter + 1);
 	};
 

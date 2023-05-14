@@ -28,16 +28,14 @@ export const QuantityChooseView5 = ({
 	const quantityValue = useRef(1);
 
 	const addToBasket = async () => {
-		addProduct(
-			product.id,
-			product.name,
-			product.price,
-			product.img,
-			selectedAroma.id,
-			selectedAroma.name,
-			quantityValue.current,
-			product.weight
-		);
+		addProduct(product.id, selectedAroma.id, {
+			productName: product.name,
+			price: product.price,
+			img: product.img,
+			aromaName: selectedAroma.name,
+			quantity: quantityValue.current,
+			weight: product.weight,
+		});
 
 		setTimeout(() => {
 			toView1();

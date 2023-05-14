@@ -13,11 +13,11 @@ import type { AromaDescription } from '../../../models/AromaDescription';
 import type { Product } from '../../../models/Product';
 import type { ProductCategory } from '../../../models/ProductCategory';
 
-type Props = {
+interface ProductItemProps {
 	product: Product;
-};
+}
 
-const ProductItem = ({ product }: Props) => {
+const ProductItem = ({ product }: ProductItemProps) => {
 	const [aromaCategories, setAromaCategories] = useState([]);
 	const [selectedAromaCategory, setSelectedAromaCategory] =
 		useState<ProductCategory>({ id: 0, name: '' });

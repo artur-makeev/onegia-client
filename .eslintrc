@@ -2,10 +2,16 @@
   "root": true,
   "parser": "@typescript-eslint/parser",
   "plugins": [
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "prettier"
   ],
   "rules": {
     "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/consistent-type-imports": "error",
+    "arrow-body-style": [
+      "error",
+      "as-needed"
+    ],
     "semi": "error",
     "@typescript-eslint/semi": [
       "warn"
@@ -14,6 +20,16 @@
       "error",
       {
         "allowSingleExtends": true
+      }
+    ],
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "parser": "typescript",
+        "endOfLine": "auto",
+        "useTabs": true,
+        "jsxSingleQuote": true
       }
     ]
   },

@@ -7,6 +7,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Image from 'next/image';
 import type { OrderProduct } from '../../../../models/Models';
+import { imageLoader } from '../../../../utilities/imageLoader';
 
 function createData(
 	image: string,
@@ -27,16 +28,6 @@ type Props = {
 };
 
 export const OrderProducts = ({ products }: Props): JSX.Element => {
-	const myLoader = ({
-		src,
-		width,
-		quality,
-	}: {
-		src: string;
-		width: number;
-		quality?: number;
-	}): string => `${src}?w=${width}&q=${quality || 100}`;
-
 	const rows = products.map((product) =>
 		createData(
 			process.env.NEXT_PUBLIC_API_URL + '/static/' + product.img,
@@ -65,7 +56,7 @@ export const OrderProducts = ({ products }: Props): JSX.Element => {
 									src={row.image}
 									width={150}
 									height={150}
-									loader={myLoader}
+									loader={imageLoader}
 									alt={row.productInfo.name}
 									priority={i === 0 ? true : false}
 								/>

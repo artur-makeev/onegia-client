@@ -13,14 +13,14 @@ import type { BranchOption, Branch } from '../../models/Branch';
 import type { Coords } from '../../models/Coords';
 import type { ShippingType } from '../../models/ShippingType';
 
-type Props = {
+interface CdekProps {
 	setCdekApiError: React.Dispatch<React.SetStateAction<boolean>>;
 	setCityCenter: React.Dispatch<React.SetStateAction<Coords>>;
 	setShowMap: React.Dispatch<React.SetStateAction<boolean>>;
 	addresses: React.MutableRefObject<Branch[]>;
 	selectedBranch: BranchOption | null;
 	setSelectedBranch: React.Dispatch<React.SetStateAction<string | null>>;
-};
+}
 
 export const Cdek = ({
 	setCdekApiError,
@@ -29,7 +29,7 @@ export const Cdek = ({
 	addresses,
 	selectedBranch,
 	setSelectedBranch,
-}: Props): JSX.Element => {
+}: CdekProps): JSX.Element => {
 	// Order store
 	const shippingType = useOrderStore((state) => state.shippingType);
 	const setShippingType = useOrderStore((state) => state.setShippingType);

@@ -15,7 +15,6 @@ import { NavBar, BottomBar } from '../modules/Layout/';
 import Head from 'next/head';
 
 import { useBasketStore } from '../modules/Basket/store/BasketStore';
-import WithYandexMetrika from '../Providers/WithYandexMetrika';
 
 interface AppPropsExtended extends AppProps {
 	emotionCache?: EmotionCache;
@@ -51,13 +50,11 @@ const App: React.FunctionComponent<AppPropsExtended> = (props) => {
 					<meta name='viewport' content='width=device-width, initial-scale=1' />
 					<link rel='preconnect' href='https://mc.yandex.ru' />
 				</Head>
-				<WithYandexMetrika>
-					<div className={inter.className}>
-						<NavBar />
-						<Component {...pageProps} />
-						<BottomBar />
-					</div>
-				</WithYandexMetrika>
+				<div className={inter.className}>
+					<NavBar />
+					<Component {...pageProps} />
+					<BottomBar />
+				</div>
 			</ThemeProvider>
 		</CacheProvider>
 	);

@@ -49,7 +49,9 @@ export const OrderFilling = (): JSX.Element => {
 		formData.append('shippingTime', deliveryTime.toString());
 		formData.append(
 			'shippingPrice',
-			shippingType === 'pickup' || shippingType === 'yandex'
+			shippingType === 'pickup' ||
+				shippingType === 'yandex' ||
+				basketTotalPrice > 4000
 				? '0'
 				: deliveryPrice.toString()
 		);
@@ -97,12 +99,18 @@ export const OrderFilling = (): JSX.Element => {
 										{shippingType === 'cdek' && (
 											<div className={styles.row}>
 												<div>Доставка (СДЭК)</div>
-												<div>{deliveryPrice} ₽</div>
+												<div>
+													{basketTotalPrice >= 4000 ? 0 : deliveryPrice} ₽
+												</div>
 											</div>
 										)}
 										<div className={styles.row}>
 											<h4>Итого</h4>
-											<h4>{basketTotalPrice + deliveryPrice} ₽</h4>
+											<h4>
+												{basketTotalPrice +
+													(basketTotalPrice >= 4000 ? 0 : deliveryPrice)}{' '}
+												₽
+											</h4>
 										</div>
 									</div>
 								)}
@@ -123,9 +131,10 @@ export const OrderFilling = (): JSX.Element => {
 										</div>
 									</div>
 								)}
-								{shippingType === 'yandex' && (
+								{shippingType === 'yandex' && basketTotalPrice < 4000 && (
 									<p>доставка оплачивается отдельно</p>
 								)}
+								<p>При заказе от 4000 ₽ доставка - бесплатно.</p>
 								<p>Производство займет 3 дня</p>
 								{shippingType === 'cdek' && deliveryPrice !== 0 && (
 									<p>

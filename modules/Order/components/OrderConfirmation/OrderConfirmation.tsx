@@ -50,7 +50,7 @@ export const OrderConfirmation = () => {
 			tax: 'none',
 		}));
 
-		if (shippingType === 'cdek') {
+		if (shippingType === 'cdek' && productsPrice < 4000) {
 			receiptItems.push({
 				name: 'доставка',
 				quantity: '1',

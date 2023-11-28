@@ -35,12 +35,17 @@ export const OrderFilling = (): JSX.Element => {
 	const setDeliveryPrice = useOrderStore((state) => state.setDeliveryPrice);
 
 	const createOrder = async () => {
+		let shippingPrice: number;
+
 		if (
 			shippingType === 'pickup' ||
 			shippingType === 'yandex' ||
 			basketTotalPrice > 4000
 		) {
 			setDeliveryPrice(0);
+			shippingPrice = 0;
+		} else {
+			shippingPrice = deliveryPrice;
 		}
 
 		const formData = new FormData();
@@ -56,7 +61,7 @@ export const OrderFilling = (): JSX.Element => {
 		formData.append('contact', clientInfo.contact);
 		formData.append('shippingType', shippingType);
 		formData.append('shippingTime', deliveryTime.toString());
-		formData.append('shippingPrice', deliveryPrice.toString());
+		formData.append('shippingPrice', shippingPrice.toString());
 		formData.append('productsPrice', JSON.stringify(basketTotalPrice));
 		formData.append('basketProducts', JSON.stringify(basketProducts));
 		setId(await orderConfirm(formData));

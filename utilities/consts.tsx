@@ -6,4 +6,4 @@ export const HOME_ROUTE = '/';
 export const ABOUT_ROUTE = '/about';
 export const OFFER_ROUTE = '/offer';
 export const CONTACTS_ROUTE = '/contacts';
-export const VK_LINK = 'https://vk.com/onegia_store';
+export const VK_LINK = 'https://vk.com/onegia_karelia';

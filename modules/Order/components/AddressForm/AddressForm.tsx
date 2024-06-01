@@ -169,7 +169,7 @@ export const AddressForm = ({ setFormValid }: Props): JSX.Element => {
 					Позвонить
 				</MenuItem>
 				<MenuItem className={styles.contactItem} value={'whatsup'}>
-					Whatsup
+					WhatsApp
 				</MenuItem>
 				<MenuItem className={styles.contactItem} value={'telegram'}>
 					Telegram

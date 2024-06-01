@@ -24,9 +24,14 @@ export const getStaticProps: GetStaticProps<ShopProps> = async () => {
 			process.env.NEXT_PUBLIC_API_URL + '/api/product'
 		);
 
+		const removedProductsIds = [2];
+
+		const filteredProducts = products.rows.filter(
+			(product) => !removedProductsIds.includes(product.id)
+		);
 		return {
 			props: {
-				products: products.rows,
+				products: filteredProducts,
 			},
 		};
 	} catch (error) {

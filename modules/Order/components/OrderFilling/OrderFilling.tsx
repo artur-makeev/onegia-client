@@ -40,7 +40,7 @@ export const OrderFilling = (): JSX.Element => {
 		if (
 			shippingType === 'pickup' ||
 			shippingType === 'yandex' ||
-			basketTotalPrice > 4000
+			basketTotalPrice >= 4000
 		) {
 			setDeliveryPrice(0);
 			shippingPrice = 0;

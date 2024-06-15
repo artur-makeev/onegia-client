@@ -34,6 +34,8 @@ export const OrderFilling = (): JSX.Element => {
 	const setProducts = useOrderStore((state) => state.setProducts);
 	const setDeliveryPrice = useOrderStore((state) => state.setDeliveryPrice);
 
+	const [cdekApiError, setCdekApiError] = useState(false);
+
 	const createOrder = async () => {
 		let shippingPrice: number;
 
@@ -56,7 +58,9 @@ export const OrderFilling = (): JSX.Element => {
 		formData.append('phone', clientInfo.phone);
 		formData.append(
 			'address',
-			shippingType === 'cdek' ? clientInfo.address : 'Петрозаводск'
+			shippingType === 'cdek' || cdekApiError
+				? clientInfo.address
+				: 'Петрозаводск'
 		);
 		formData.append('contact', clientInfo.contact);
 		formData.append('shippingType', shippingType);
@@ -79,7 +83,11 @@ export const OrderFilling = (): JSX.Element => {
 				<div className={styles.orderContainer}>
 					<div className={styles.addressContainer}>
 						<div className={styles.orderForm}>
-							<AddressForm setFormValid={setFormValid} />
+							<AddressForm
+								setFormValid={setFormValid}
+								cdekApiError={cdekApiError}
+								setCdekApiError={setCdekApiError}
+							/>
 							<Link href={OFFER_ROUTE} className={styles.offer}>
 								Публичная оферта
 							</Link>

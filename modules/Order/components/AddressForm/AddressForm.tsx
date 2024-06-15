@@ -15,9 +15,15 @@ import type { Contact } from '../../../../models/Models';
 
 type Props = {
 	setFormValid: React.Dispatch<React.SetStateAction<boolean>>;
+	setCdekApiError: React.Dispatch<React.SetStateAction<boolean>>;
+	cdekApiError: boolean;
 };
 
-export const AddressForm = ({ setFormValid }: Props): JSX.Element => {
+export const AddressForm = ({
+	setFormValid,
+	cdekApiError,
+	setCdekApiError,
+}: Props): JSX.Element => {
 	const shippingType = useOrderStore((state) => state.shippingType);
 	const setClientInfo = useOrderStore((state) => state.setClientInfo);
 
@@ -33,8 +39,6 @@ export const AddressForm = ({ setFormValid }: Props): JSX.Element => {
 	const [emailDirty, setEmailDirty] = useState(false);
 	const [emailIncorrect, setEmailIncorrect] = useState(false);
 	const [emailError, setEmailError] = useState('');
-
-	const [cdekApiError, setCdekApiError] = useState(false);
 
 	const addresses = useRef([]) as MutableRefObject<Branch[]>;
 	const [selectedBranch, setSelectedBranch] = useState<BranchOption | null>(
@@ -79,7 +83,6 @@ export const AddressForm = ({ setFormValid }: Props): JSX.Element => {
 		} else {
 			setFormValid(false);
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
 		lastName,
 		firstName,
@@ -89,6 +92,10 @@ export const AddressForm = ({ setFormValid }: Props): JSX.Element => {
 		selectedBranch,
 		contact,
 		shippingType,
+		cdekApiError,
+		address,
+		emailError,
+		setFormValid,
 	]);
 
 	const updateAddressData = () => {

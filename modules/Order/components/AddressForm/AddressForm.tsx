@@ -113,7 +113,16 @@ export const AddressForm = ({
 	useEffect(() => {
 		updateAddressData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [lastName, firstName, fatherName, email, phone, selectedBranch, contact]);
+	}, [
+		lastName,
+		firstName,
+		fatherName,
+		email,
+		phone,
+		selectedBranch,
+		contact,
+		address,
+	]);
 
 	return (
 		<Box

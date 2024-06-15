@@ -71,7 +71,7 @@ export const AddressForm = ({ setFormValid }: Props): JSX.Element => {
 				fatherName &&
 				email &&
 				phone &&
-				selectedBranch) ||
+				(!cdekApiError ? selectedBranch : address)) ||
 			shippingType === 'pickup' ||
 			(shippingType === 'yandex' && emailError === '' && contact)
 		) {

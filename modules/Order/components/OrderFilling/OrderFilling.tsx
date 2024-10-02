@@ -141,7 +141,7 @@ export const OrderFilling = (): JSX.Element => {
 										</div>
 										<div>
 											<p>Самовывоз осуществляется</p>
-											<p>по адресу: ул. Ригачина д. 47</p>
+											<p>по адресу: Онежской флотилии 37А</p>
 											<p>Время оговаривается с менеджером.</p>
 										</div>
 									</div>
@@ -150,7 +150,7 @@ export const OrderFilling = (): JSX.Element => {
 									<p>доставка оплачивается отдельно</p>
 								)}
 								<p>При заказе от 4000 ₽ доставка - бесплатно.</p>
-								<p>Производство займет 3 дня</p>
+								<p>Производство займет 5 рабочих дней</p>
 								{shippingType === 'cdek' && deliveryPrice !== 0 && (
 									<p>
 										Доставка займет {deliveryTime} {daySpelling(deliveryTime)}
